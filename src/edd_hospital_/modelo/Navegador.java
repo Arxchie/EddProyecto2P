@@ -14,7 +14,7 @@ import java.util.List;
 public class Navegador
 {
 
-    List<String> ruta = new ArrayList<>(List.of("Dependencias")); // Empieza con la raíz
+    List<String> nivel = new ArrayList<>(List.of("Dependencias")); // Empieza con la raíz
     String[] niveles =
     {
         "Dependencias", "Hospitales", "Especialidades", "Pacientes"
@@ -22,10 +22,10 @@ public class Navegador
 
     public void entrar()
     {
-        int index = getNivelIndex(ubicacionActual());
+        int index = getNivelIndex(nivelActual());
         if (index < niveles.length - 1)
         {
-            ruta.add(niveles[index + 1]);
+            nivel.add(niveles[index + 1]);
         } else
         {
             System.out.println("Ya estás en el último nivel.");
@@ -34,24 +34,24 @@ public class Navegador
 
     public void volver()
     {
-        if (ruta.size() > 1)
+        if (nivel.size() > 1)
         {
-            ruta.remove(ruta.size() - 1); // Eliminamos el último
+            nivel.remove(nivel.size() - 1); // Eliminamos el último
         } else
         {
             System.out.println("Ya estás en el nivel raíz.");
         }
     }
 
-    public String ubicacionActual()
+    public String nivelActual()
     {
-        return ruta.get(ruta.size() - 1);
+        return nivel.get(nivel.size() - 1);
     }
 
     public void mostrarRuta()
     {
-        System.out.println("Ruta completa: " + ruta);
-        System.out.println("Ubicacion actual: " + ubicacionActual());
+        System.out.println("Ruta completa: " + nivel);
+        System.out.println("Ubicacion actual: " + nivelActual());
     }
 
     private int getNivelIndex(String nivel)

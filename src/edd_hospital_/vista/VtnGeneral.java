@@ -20,7 +20,7 @@ public class VtnGeneral extends javax.swing.JFrame
 
     Navegador navegador = new Navegador();
     MultiListaDL multilista = new MultiListaDL();
-    NodoML ubicacionActual = multilista.getR();
+    NodoML nivelActual = multilista.getR();
 
     /**
      * Creates new form VtnGeneral
@@ -39,7 +39,7 @@ public class VtnGeneral extends javax.swing.JFrame
 
         initComponents();
         jtbTabla.getTableHeader().setReorderingAllowed(false);
-        mostrarDatosEnTabla(ubicacionActual);
+        mostrarDatosEnTabla(nivelActual);
 
     }
 
@@ -54,7 +54,7 @@ public class VtnGeneral extends javax.swing.JFrame
 
         modeloTabla.setRowCount(0); // Limpiar tabla
         resetearModeloTabla();
-        switch (navegador.ubicacionActual())
+        switch (navegador.nivelActual())
         {
             case "Dependencias" ->
             {
@@ -421,16 +421,16 @@ public class VtnGeneral extends javax.swing.JFrame
         {
             int filaSeleccionada = jtbTabla.getSelectedRow();
             int columna = 0;
-            if (filaSeleccionada != -1 && ubicacionActual.getAbj() != null)
+            if (filaSeleccionada != -1 && nivelActual.getAbj() != null)
             {
                 Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
                 String clave = (String) valor;
-                NodoML siguienteUbicacion = multilista.busca(ubicacionActual, clave);
+                NodoML siguienteUbicacion = multilista.buscaEnLista(nivelActual, clave);
                 if (siguienteUbicacion != null)
                 {
-                    ubicacionActual = siguienteUbicacion.getAbj();
+                    nivelActual = siguienteUbicacion.getAbj();
                     navegador.entrar();
-                    mostrarDatosEnTabla(ubicacionActual);
+                    mostrarDatosEnTabla(nivelActual);
 
                 }
 
@@ -442,8 +442,8 @@ public class VtnGeneral extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton5ActionPerformed
         // TODO add your handling code here:
         navegador.volver();
-        ubicacionActual = ubicacionActual.getArb();
-        mostrarDatosEnTabla(ubicacionActual);
+        //nivelActual = nivelActual.getArb();
+        mostrarDatosEnTabla(nivelActual);
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
