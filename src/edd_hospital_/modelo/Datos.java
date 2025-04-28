@@ -69,7 +69,6 @@ public class Datos implements Serializable
         {
             throw new IllegalStateException("Se ha alcanzado el numero maximo de registros (999)");
         }
-
         inicial = Character.toUpperCase(inicial);
         return String.format("%c%03d", inicial, ++numeroDeRegistros);
     }

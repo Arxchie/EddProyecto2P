@@ -8,50 +8,56 @@ package edd_hospital_.multi_lista;
  *
  * @author Joabp
  */
-public class ListaDLML
+public class ListaDLML<T>
 {
 
-    private NodoML r;
-
-    public ListaDLML(NodoML r)
-    {
-        this.r = r;
-    }
+    private NodoML<T> r;
 
     public ListaDLML()
     {
     }
 
-    public NodoML getR()
-    {
-        return r;
-    }
-
-    public void setR(NodoML r)
+    public ListaDLML(NodoML<T> r)
     {
         this.r = r;
     }
 
-    public void inserta(NodoML n)
+    /**
+     * @return the r
+     */
+    public NodoML<T> getR()
+    {
+        return r;
+    }
+
+    /**
+     * @param r the r to set
+     */
+    public void setR(NodoML<T> r)
+    {
+        this.r = r;
+    }
+
+    public void inserta(NodoML<T> n)
     {
         if (n == null)
         {
             System.out.println("No se puede insertar un nodo nulo.");
         } else
         {
-            if (r == null)
+            if (getR() == null)
             {
-                r = n;
+                setR((NodoML<T>) n);
             } else
             {
-                if (r.getEt().compareTo(n.getEt()) > 0)
+                if (getR().getEt().compareTo(n.getEt()) > 0)
                 {
-                    n.setSig(r);
-                    r.setAnt(n);
-                    r = n;
+                    n.setSig(getR());
+                    getR().setAnt(n);
+                    setR((NodoML<T>) n);
                 } else
                 {
-                    NodoML aux = r;
+                    NodoML aux = getR();
                     while (aux.getSig() != null)
                     {
                         if (aux.getSig().getEt().compareTo(n.getEt()) > 0)
@@ -73,12 +79,12 @@ public class ListaDLML
 
     public String desp()
     {
-        if (r == null)
+        if (getR() == null)
         {
             return "Lista vacia";
         }
         String s = "";
-        NodoML aux = r;
+        NodoML aux = getR();
         while (aux != null)
         {
             s += aux.getEt() + "\t";
@@ -99,7 +105,7 @@ public class ListaDLML
         return s;
     }
 
-    public String despRecursivo(NodoML aux, String s)
+    public String despRecursivo(NodoML<T> aux, String s)
     {
         if (aux != null)
         {
@@ -108,24 +114,24 @@ public class ListaDLML
         return s;
     }
 
-    public NodoML elimina(NodoML n)
+    public NodoML elimina(NodoML <T>n)
     {
-        if (r == null || r.getEt().compareTo(n.getEt()) > 0)
+        if (getR() == null || getR().getEt().compareTo(n.getEt()) > 0)
         {
             return null;
         }
         NodoML eliminado = null;
-        if (r.getEt().compareTo(n.getEt()) == 0)
+        if (getR().getEt().compareTo(n.getEt()) == 0)
         {
-            eliminado = r;
-            r = r.getSig();
-            if (r != null)
+            eliminado = getR();
+            setR((NodoML<T>) getR().getSig());
+            if (getR() != null)
             {
-                r.setAnt(null);
+                getR().setAnt(null);
             }
             return eliminado;
         }
-        NodoML aux = r;
+        NodoML aux = getR();
         while (aux.getSig() != null)
         {
             if (aux.getSig().getEt().compareTo(n.getEt()) == 0)

@@ -4,6 +4,8 @@
  */
 package main;
 
+import edd_hospital_.modelo.Dependencia;
+
 /**
  *
  * @author HP
@@ -12,6 +14,6 @@ public class Main
 {
     public static void main(String[] args)
     {
-        
+
     }
 }
