@@ -14,60 +14,152 @@ import java.util.List;
 public class Navegador
 {
 
-    List<String> nivel = new ArrayList<>(List.of("Dependencias")); // Empieza con la raíz
-    String[] niveles =
-    {
-        "Dependencias", "Hospitales", "Especialidades", "Pacientes"
-    };
+    private List<String> ruta; // Empieza con la raíz
+    private int numeroNiveles;
+    private String raiz = null;
 
-    public void entrar()
+    public Navegador()
     {
-        int index = getNivelIndex(nivelActual());
-        if (index < niveles.length - 1)
+        this.ruta = new ArrayList<>();
+    }
+
+    public Navegador(String raiz, int numeroNiveles)
+    {
+        this.raiz = raiz;
+        this.ruta = new ArrayList<>(List.of(raiz));
+        this.numeroNiveles = numeroNiveles;
+    }
+
+    public Navegador(int numeroNiveles)
+    {
+        this.numeroNiveles = numeroNiveles;
+        this.ruta = new ArrayList<>();
+    }
+
+    public void entrar(String nombre) throws NavegadorException
+    {
+        if (getRuta().size() < getNumeroNiveles())
         {
-            nivel.add(niveles[index + 1]);
+            getRuta().add(nombre);
         } else
         {
-            System.out.println("Ya estás en el último nivel.");
+            throw new NavegadorException("Ya estás en el último nivel.");
         }
     }
 
-    public void volver()
+    public void volver() throws NavegadorException
     {
-        if (nivel.size() > 1)
+        if (getRuta().size() >= 1 && !ruta.get(ruta.size() - 1).equals(raiz))
         {
-            nivel.remove(nivel.size() - 1); // Eliminamos el último
+            getRuta().remove(getRuta().size() - 1);
         } else
         {
-            System.out.println("Ya estás en el nivel raíz.");
+            throw new NavegadorException("No es posible volver mas");
         }
     }
 
-    public String nivelActual()
+    public String getNivelActual()
     {
-        return nivel.get(nivel.size() - 1);
+        if (!ruta.isEmpty())
+        {
+            return getRuta().get(getRuta().size() - 1);
+        }
+        return null;
     }
 
     public void mostrarRuta()
     {
-        System.out.println("Ruta completa: " + nivel);
-        System.out.println("Ubicacion actual: " + nivelActual());
+        System.out.println("Ruta completa: " + getRuta());
+        System.out.println("Ubicacion actual: " + getNivelActual());
     }
 
-    private int getNivelIndex(String nivel)
+    public int getNivelIndex(String nivel)
     {
-        for (int i = 0; i < niveles.length; i++)
+        int contador = 0;
+        for (String s : getRuta())
         {
-            if (niveles[i].equals(nivel))
+            if (s.equals(nivel))
             {
-                return i;
+                return contador;
             }
+            contador++;
+
         }
-        return -1; // No encontrado
+        return -1; // No encontrados
+    }
+
+    public int getNivelActualIndex()
+    {
+        return ruta.size();
     }
 
     public static void main(String[] args)
     {
+        Navegador navegador = new Navegador("Dependencias ", 4);
+        navegador.mostrarRuta();
+        try
+        {
+            navegador.entrar("Especialidades");
+            navegador.entrar("Pacientes");
+            navegador.mostrarRuta();
+            ;
+        } catch (NavegadorException e)
+        {
+            System.out.println(e.getMessage());
+        }
 
+        navegador.mostrarRuta();
+        System.out.println(navegador.getRuta().size());
+
+    }
+
+    /**
+     * @return the ruta
+     */
+    public List<String> getRuta()
+    {
+        return ruta;
+    }
+
+    public String[] getRutaArray()
+    {
+        String[] arrayRuta = ruta.toArray(new String[ruta.size()]);
+        for (int i = 0; i < ruta.size(); i++)
+        {
+            arrayRuta[i] = ruta.get(i);
+        }
+        return arrayRuta;
+    }
+
+    /**
+     * @return the numeroNiveles
+     */
+    public int getNumeroNiveles()
+    {
+        return numeroNiveles;
+    }
+
+    /**
+     * @return the raiz
+     */
+    public String getRaiz()
+    {
+        return raiz;
+    }
+
+    /**
+     * @param numeroNiveles the numeroNiveles to set
+     */
+    public void setNumeroNiveles(int numeroNiveles)
+    {
+        this.numeroNiveles = numeroNiveles;
+    }
+
+    /**
+     * @param raiz the raiz to set
+     */
+    public void setRaiz(String raiz)
+    {
+        this.raiz = raiz;
     }
 }

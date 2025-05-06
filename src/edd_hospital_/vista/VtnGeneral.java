@@ -2,12 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edd_hospital_.vista;
+package edd_hospital.vista;
 
 import javax.swing.table.DefaultTableModel;
 import edd_hospital_.multi_lista.*;
 
 import edd_hospital_.modelo.*;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -18,9 +24,13 @@ import javax.swing.SwingUtilities;
 public class VtnGeneral extends javax.swing.JFrame
 {
 
-    Navegador navegador = new Navegador();
+    Navegador navegador;
     MultiListaDL multilista = new MultiListaDL();
-    NodoML nivelActual = multilista.getR();
+    NodoML ubicacionActual;
+    private final int DEPENDENCIAS = 1;
+    private final int HOSPITALES = 2;
+    private final int ESPECIALIDADES = 3;
+    private final int PACIENTES = 4;
 
     /**
      * Creates new form VtnGeneral
@@ -38,47 +48,91 @@ public class VtnGeneral extends javax.swing.JFrame
     {
 
         initComponents();
-        jtbTabla.getTableHeader().setReorderingAllowed(false);
-        mostrarDatosEnTabla(nivelActual);
+        navegador = new Navegador("raiz", 5);
+        jtbTabla.getTableHeader().setReorderingAllowed(false);;
+        multilista.inserta(new NodoML(null, "raiz"));
+        multilista.inserta(new NodoML(new Dependencia("1", "San Juan"), "D001"), "raiz");
+        multilista.inserta(new NodoML(new Hospitales("San lucas n34", 1, "24 noviembre"), "H002"), "raiz", "D001");
+        multilista.inserta(new NodoML(new Dependencia("2", "San Lucas"), "D003"), "raiz");
+        ubicacionActual = multilista.getR();
+        actualizarVista();
 
     }
 
-    @SuppressWarnings("unchecked")
-    private void mostrarDatosEnTabla(NodoML<Object> r)
+    private void actualizarPanelNavegacion()
     {
-        if (r == null)
+        panelNavegacion.removeAll(); // Limpiar el panel antes de actualizarlo
+        List<String> ruta = navegador.getRuta(); // Obtener la ruta
+
+        for (int i = 0; i < ruta.size(); i++)
         {
-            JOptionPane.showMessageDialog(this, "No hay elementos");
-            return;
+            String s = ruta.get(i);
+            JLabel ubicacion = new JLabel(s);
+            panelNavegacion.add(ubicacion);
+
+            // Si no es el último elemento, agregar flecha
+            try
+            {
+                if (i < ruta.size() - 1)
+                {
+
+                    JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("imagenes/flecha.png")));
+                    panelNavegacion.add(flecha);
+                }
+            } catch (Exception e)
+            {
+                JLabel flecha = new JLabel(">");
+                panelNavegacion.add(flecha);
+                System.out.println(e.getMessage());
+            }
         }
+        panelNavegacion.revalidate(); // Actualiza la interfaz
+        panelNavegacion.repaint();    // Repinta el panel para mostrar los cambios
+    }
+
+    private void actualizarVista()
+    {
+        mostrarDatosEnTabla(ubicacionActual.getAbj());
+        actualizarPanelNavegacion();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void mostrarDatosEnTabla(NodoML raiz)
+    {
 
         modeloTabla.setRowCount(0); // Limpiar tabla
         resetearModeloTabla();
-        switch (navegador.nivelActual())
+        switch (navegador.getNivelActualIndex())
         {
-            case "Dependencias" ->
+            case DEPENDENCIAS ->
             {
+                System.out.println("Dependencias");
                 colocarModeloDependencia();
-                mostrarDependencias(r);
+                mostrarDependencias(raiz);
             }
-            case "Hospitales" ->
+            case HOSPITALES ->
             {
+                System.out.println("Hospitales");
                 colocarModeloHospitales();
-                mostrarHospitales(r);
+                mostrarHospitales(raiz);
             }
-            case "Especialidades" ->
+            case ESPECIALIDADES ->
             {
+                System.out.println("Especialidades");
                 colocarModeloEspecialidad();
-                mostrarEspecialidades(r);
+                mostrarEspecialidades(raiz);
             }
-            case "Pacientes" ->
+            case PACIENTES ->
             {
+                System.out.println("Pacientes");
                 colocarModeloPacientes();
-                mostrarPacientes(r);
+                mostrarPacientes(raiz);
             }
             default ->
-                System.out.println("Ubicación desconocida");
+                JOptionPane.showMessageDialog(this, "Nivel desconocido" + navegador.getNivelActualIndex());
+
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -117,6 +171,7 @@ public class VtnGeneral extends javax.swing.JFrame
                     e.getNumeroDeMedicos(),
                     e.getNumeroDeCamas()
                 });
+
             }
             aux = aux.getSig();
         }
@@ -131,6 +186,7 @@ public class VtnGeneral extends javax.swing.JFrame
             Object dato = aux.getObj();
             if (dato instanceof Hospitales h)
             {
+
                 modeloTabla.addRow(new Object[]
                 {
                     h.getClaveH(),
@@ -160,7 +216,9 @@ public class VtnGeneral extends javax.swing.JFrame
                     p.getVigencia(),
                     p.getSexo()
                 });
+
             }
+
             aux = aux.getSig();
         }
     }
@@ -225,9 +283,7 @@ public class VtnGeneral extends javax.swing.JFrame
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jpnSuperior = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        panelNavegacion = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbTabla = new javax.swing.JTable();
@@ -311,13 +367,7 @@ public class VtnGeneral extends javax.swing.JFrame
 
         jpnSuperior.setBackground(new java.awt.Color(153, 153, 255));
 
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 15));
-
-        jLabel1.setText("jLabel1");
-        jPanel2.add(jLabel1);
-
-        jLabel2.setText("jLabel2");
-        jPanel2.add(jLabel2);
+        panelNavegacion.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 15));
 
         jButton5.setText("jButton5");
         jButton5.addActionListener(new java.awt.event.ActionListener()
@@ -333,13 +383,10 @@ public class VtnGeneral extends javax.swing.JFrame
         jpnSuperiorLayout.setHorizontalGroup(
             jpnSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnSuperiorLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
                 .addGroup(jpnSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpnSuperiorLayout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpnSuperiorLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton5)))
+                    .addComponent(jButton5)
+                    .addComponent(panelNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         jpnSuperiorLayout.setVerticalGroup(
@@ -348,7 +395,7 @@ public class VtnGeneral extends javax.swing.JFrame
                 .addContainerGap(7, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -395,7 +442,6 @@ public class VtnGeneral extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jtbTablaKeyPressed
         // TODO add your handling code here:
 
-
     }//GEN-LAST:event_jtbTablaKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
@@ -419,33 +465,69 @@ public class VtnGeneral extends javax.swing.JFrame
         // TODO add your handling code here:
         if (evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt))
         {
-            int filaSeleccionada = jtbTabla.getSelectedRow();
-            int columna = 0;
-            if (filaSeleccionada != -1 && nivelActual.getAbj() != null)
+            String claveSeleccionado = getClaveSeleccionado();
+            if (claveSeleccionado != null)
             {
-                Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
-                String clave = (String) valor;
-                NodoML siguienteUbicacion = multilista.buscaEnLista(nivelActual, clave);
-                if (siguienteUbicacion != null)
+                try
                 {
-                    nivelActual = siguienteUbicacion.getAbj();
-                    navegador.entrar();
-                    mostrarDatosEnTabla(nivelActual);
+                    navegador.entrar(claveSeleccionado);
+                    NodoML siguienteUbicacion = multilista.buscarEnMultilista(navegador.getRutaArray());
 
+                    if (siguienteUbicacion != null)
+                    {
+                        ubicacionActual = siguienteUbicacion;
+                        actualizarVista();
+                        navegador.mostrarRuta();
+                    }
+
+                } catch (NavegadorException ex)
+                {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
 
             }
+
         }
     }//GEN-LAST:event_jtbTablaMouseClicked
 
+    private String getClaveSeleccionado()
+    {
+        String claveSeleccionado = null;
+        int filaSeleccionada = jtbTabla.getSelectedRow();
+        int columna = 0;
+        if (filaSeleccionada != -1)
+        {
+            Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
+            claveSeleccionado = (String) valor;
+        }
+        return claveSeleccionado;
+    }
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton5ActionPerformed
     {//GEN-HEADEREND:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        navegador.volver();
-        //nivelActual = nivelActual.getArb();
-        mostrarDatosEnTabla(nivelActual);
+        volver();
+        actualizarVista();
+
 
     }//GEN-LAST:event_jButton5ActionPerformed
+    private void volver()
+    {
+
+        if (navegador.getNivelActualIndex() == DEPENDENCIAS)
+        {
+            JOptionPane.showMessageDialog(this, "Estas en el nivel principal");
+            return;
+        }
+        try
+        {
+            navegador.volver();
+            ubicacionActual = ubicacionActual.getArb();
+        } catch (NavegadorException ex)
+        {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -465,30 +547,23 @@ public class VtnGeneral extends javax.swing.JFrame
                 {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
-        } catch (ClassNotFoundException ex)
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
         {
-            java.util.logging.Logger.getLogger(VtnGeneral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(VtnGeneral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(VtnGeneral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(VtnGeneral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VtnGeneral.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         }
         //</editor-fold>
 
+        //</editor-fold>
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
+        java.awt.EventQueue.invokeLater(() ->
         {
-            public void run()
-            {
-                new VtnGeneral().setVisible(true);
-            }
+            new VtnGeneral().setVisible(true);
         });
 
     }
@@ -499,15 +574,13 @@ public class VtnGeneral extends javax.swing.JFrame
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpnBotones;
     private javax.swing.JPanel jpnLateral;
     private javax.swing.JPanel jpnSuperior;
     private javax.swing.JTable jtbTabla;
+    private javax.swing.JPanel panelNavegacion;
     // End of variables declaration//GEN-END:variables
 }
