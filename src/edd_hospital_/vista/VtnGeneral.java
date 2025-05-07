@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edd_hospital.vista;
+package edd_hospital_.vista;
 
 import javax.swing.table.DefaultTableModel;
 import edd_hospital_.multi_lista.*;
 
 import edd_hospital_.modelo.*;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -48,12 +47,12 @@ public class VtnGeneral extends javax.swing.JFrame
     {
 
         initComponents();
-        navegador = new Navegador("raiz", 5);
+        navegador = new Navegador("Inicio", 5);
         jtbTabla.getTableHeader().setReorderingAllowed(false);;
-        multilista.inserta(new NodoML(null, "raiz"));
-        multilista.inserta(new NodoML(new Dependencia("1", "San Juan"), "D001"), "raiz");
-        multilista.inserta(new NodoML(new Hospitales("San lucas n34", 1, "24 noviembre"), "H002"), "raiz", "D001");
-        multilista.inserta(new NodoML(new Dependencia("2", "San Lucas"), "D003"), "raiz");
+        multilista.inserta(new NodoML(null, "Inicio"));
+        multilista.inserta(new NodoML(new Dependencia("1", "San Juan"), "D001"), "Inicio");
+        multilista.inserta(new NodoML(new Hospitales("San lucas n34", 1, "24 noviembre"), "H002"), "Inicio", "D001");
+        multilista.inserta(new NodoML(new Dependencia("2", "San Lucas"), "D003"), "Inicio");
         ubicacionActual = multilista.getR();
         actualizarVista();
 
@@ -68,15 +67,15 @@ public class VtnGeneral extends javax.swing.JFrame
         {
             String s = ruta.get(i);
             JLabel ubicacion = new JLabel(s);
+            ubicacion.setFont(new Font("Arial", Font.PLAIN, 14));
             panelNavegacion.add(ubicacion);
-
             // Si no es el último elemento, agregar flecha
             try
             {
                 if (i < ruta.size() - 1)
                 {
 
-                    JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("imagenes/flecha.png")));
+                    JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("/edd_hospital_/vista/imagenes/flecha.png")));
                     panelNavegacion.add(flecha);
                 }
             } catch (Exception e)
@@ -92,6 +91,10 @@ public class VtnGeneral extends javax.swing.JFrame
 
     private void actualizarVista()
     {
+        if (ubicacionActual == null)
+        {
+            return;
+        }
         mostrarDatosEnTabla(ubicacionActual.getAbj());
         actualizarPanelNavegacion();
     }
@@ -401,6 +404,7 @@ public class VtnGeneral extends javax.swing.JFrame
 
         jPanel4.add(jpnSuperior, java.awt.BorderLayout.PAGE_START);
 
+        jtbTabla.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jtbTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
@@ -413,6 +417,8 @@ public class VtnGeneral extends javax.swing.JFrame
         ));
         jtbTabla.setDragEnabled(true);
         jtbTabla.setRequestFocusEnabled(false);
+        jtbTabla.setRowHeight(25);
+        jtbTabla.setSelectionBackground(new java.awt.Color(153, 153, 255));
         jtbTabla.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
@@ -452,43 +458,51 @@ public class VtnGeneral extends javax.swing.JFrame
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton4ActionPerformed
     {//GEN-HEADEREND:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int filaSeleccionada = jtbTabla.getSelectedRow();
-        if (filaSeleccionada != -1)
-        {
 
-        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     @SuppressWarnings("unchecked")
     private void jtbTablaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtbTablaMouseClicked
     {//GEN-HEADEREND:event_jtbTablaMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt))
+        if (esDobleClickIzquierdo(evt))
         {
-            String claveSeleccionado = getClaveSeleccionado();
-            if (claveSeleccionado != null)
-            {
-                try
-                {
-                    navegador.entrar(claveSeleccionado);
-                    NodoML siguienteUbicacion = multilista.buscarEnMultilista(navegador.getRutaArray());
-
-                    if (siguienteUbicacion != null)
-                    {
-                        ubicacionActual = siguienteUbicacion;
-                        actualizarVista();
-                        navegador.mostrarRuta();
-                    }
-
-                } catch (NavegadorException ex)
-                {
-                    JOptionPane.showMessageDialog(this, ex.getMessage());
-                }
-
-            }
-
+            manejarDobleClick();
         }
+
     }//GEN-LAST:event_jtbTablaMouseClicked
+
+    private boolean esDobleClickIzquierdo(MouseEvent evt)
+    {
+        return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
+    }
+
+    private void manejarDobleClick()
+    {
+        String clave = getClaveSeleccionado();
+        if (clave != null)
+        {
+            intentarEntrar(clave);
+        }
+    }
+
+    private void intentarEntrar(String clave)
+    {
+        try
+        {
+            navegador.entrar(clave);
+            NodoML ubicacion = multilista.buscarEnMultilista(navegador.getRutaArray());
+            if (ubicacion != null)
+            {
+                ubicacionActual = ubicacion;
+                actualizarVista();
+                navegador.mostrarRuta();
+            }
+        } catch (NavegadorException ex)
+        {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
 
     private String getClaveSeleccionado()
     {
