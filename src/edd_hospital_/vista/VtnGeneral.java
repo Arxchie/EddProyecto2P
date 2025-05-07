@@ -26,10 +26,10 @@ public class VtnGeneral extends javax.swing.JFrame
     Navegador navegador;
     MultiListaDL multilista = new MultiListaDL();
     NodoML ubicacionActual;
-    private final int DEPENDENCIAS = 1;
-    private final int HOSPITALES = 2;
-    private final int ESPECIALIDADES = 3;
-    private final int PACIENTES = 4;
+    private final int DEPENDENCIAS = 0;
+    private final int HOSPITALES = 1;
+    private final int ESPECIALIDADES = 2;
+    private final int PACIENTES = 3;
 
     /**
      * Creates new form VtnGeneral
@@ -47,12 +47,11 @@ public class VtnGeneral extends javax.swing.JFrame
     {
 
         initComponents();
-        navegador = new Navegador("Inicio", 5);
-        jtbTabla.getTableHeader().setReorderingAllowed(false);;
-        multilista.inserta(new NodoML(null, "Inicio"));
-        multilista.inserta(new NodoML(new Dependencia("1", "San Juan"), "D001"), "Inicio");
-        multilista.inserta(new NodoML(new Hospitales("San lucas n34", 1, "24 noviembre"), "H002"), "Inicio", "D001");
-        multilista.inserta(new NodoML(new Dependencia("2", "San Lucas"), "D003"), "Inicio");
+        navegador = new Navegador(4);
+        jtbTabla.getTableHeader().setReorderingAllowed(false);
+        multilista.inserta(new NodoML(new Dependencia("1", "San Juan"), "D001"));
+        multilista.inserta(new NodoML(new Hospitales("San lucas n34", 1, "24 noviembre"), "H002"), "D001");
+        multilista.inserta(new NodoML(new Dependencia("2", "San Lucas"), "D003"));
         ubicacionActual = multilista.getR();
         actualizarVista();
 
@@ -95,7 +94,13 @@ public class VtnGeneral extends javax.swing.JFrame
         {
             return;
         }
-        mostrarDatosEnTabla(ubicacionActual.getAbj());
+        if (navegador.getNivelActualIndex() == DEPENDENCIAS)
+        {
+            mostrarDatosEnTabla(ubicacionActual);
+        } else
+        {
+            mostrarDatosEnTabla(ubicacionActual.getAbj());
+        }
         actualizarPanelNavegacion();
     }
 
@@ -534,8 +539,15 @@ public class VtnGeneral extends javax.swing.JFrame
         }
         try
         {
+            if (navegador.getNivelActualIndex() == HOSPITALES)
+            {
+                ubicacionActual = multilista.getR();
+
+            } else
+            {
+                ubicacionActual = ubicacionActual.getArb();
+            }
             navegador.volver();
-            ubicacionActual = ubicacionActual.getArb();
         } catch (NavegadorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.getMessage());
