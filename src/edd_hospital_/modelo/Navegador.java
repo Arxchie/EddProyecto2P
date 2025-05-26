@@ -17,10 +17,12 @@ public class Navegador
     private List<String> ruta; // Empieza con la raíz
     private int numeroNiveles;
     private String raiz = null;
+    Niveles[] niveles;
 
     public Navegador()
     {
         this.ruta = new ArrayList<>();
+        niveles = Niveles.values();
     }
 
     public Navegador(String raiz, int numeroNiveles)
@@ -28,12 +30,48 @@ public class Navegador
         this.raiz = raiz;
         this.ruta = new ArrayList<>(List.of(raiz));
         this.numeroNiveles = numeroNiveles;
+        niveles = Niveles.values();
     }
 
     public Navegador(int numeroNiveles)
     {
         this.numeroNiveles = numeroNiveles;
         this.ruta = new ArrayList<>();
+        niveles = Niveles.values();
+    }
+
+    public Niveles getTipoNivelActual()
+    {
+        return niveles[ruta.size()];
+    }
+
+    public String getElementoActual()
+    {
+        if (!ruta.isEmpty())
+        {
+            return getRuta().get(getRuta().size() - 1);
+        }
+        return null;
+    }
+
+    public int getNivelIndex(String nivel)
+    {
+        int contador = 0;
+        for (String s : getRuta())
+        {
+            if (s.equals(nivel))
+            {
+                return contador;
+            }
+            contador++;
+
+        }
+        return -1; // No encontrados
+    }
+
+    public int getNivelActualIndex()
+    {
+        return ruta.size();
     }
 
     public void entrar(String nombre) throws NavegadorException
@@ -58,39 +96,10 @@ public class Navegador
         }
     }
 
-    public String getNivelActual()
-    {
-        if (!ruta.isEmpty())
-        {
-            return getRuta().get(getRuta().size() - 1);
-        }
-        return null;
-    }
-
     public void mostrarRuta()
     {
         System.out.println("Ruta completa: " + getRuta());
-        System.out.println("Ubicacion actual: " + getNivelActual());
-    }
-
-    public int getNivelIndex(String nivel)
-    {
-        int contador = 0;
-        for (String s : getRuta())
-        {
-            if (s.equals(nivel))
-            {
-                return contador;
-            }
-            contador++;
-
-        }
-        return -1; // No encontrados
-    }
-
-    public int getNivelActualIndex()
-    {
-        return ruta.size();
+        System.out.println("Ubicacion actual: " + getElementoActual());
     }
 
     public static void main(String[] args)

@@ -10,10 +10,10 @@ package edd_hospital_.modelo;
  */
 public class Paciente extends Datos
 {
+    private String claveP;
     private String estatus;
     private String vigencia;
     private char sexo;
-    private String claveP;
     
     
 
