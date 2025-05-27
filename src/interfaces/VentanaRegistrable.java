@@ -5,6 +5,7 @@
 package interfaces;
 
 import edd_hospital_.multi_lista.NodoML;
+import javax.swing.JButton;
 
 /**
  *
@@ -13,4 +14,6 @@ import edd_hospital_.multi_lista.NodoML;
 public interface VentanaRegistrable
 {
     NodoML getNodoRegistrado();
+    JButton getBotonAceptarRegistro();
 }
+

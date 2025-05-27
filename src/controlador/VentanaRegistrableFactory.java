@@ -5,8 +5,10 @@
 package controlador;
 
 import edd_hospital_.modelo.Niveles;
-import edd_hospital_.modelo.Nodos;
-import edd_hospital_.multi_lista.NodoML;
+import edd_hospital_.vista.vtnDependencia;
+import edd_hospital_.vista.vtnEspecialidad;
+import edd_hospital_.vista.vtnHospitales;
+import edd_hospital_.vista.vtnPacientes;
 import interfaces.VentanaRegistrable;
 
 /**
@@ -23,23 +25,25 @@ public class VentanaRegistrableFactory
             case DEPENDENCIA ->
             {
                 System.out.println("ventana Dependencias");
-                return new prueba();
+                return new vtnDependencia(null,true);
 
             }
             case HOSPITAL ->
             {
                 System.out.println("ventana Hospitales");
-                return new pruebaHospital();
+                return new vtnHospitales();
             }
             case ESPECIALIDAD ->
             {
                 System.out.println("ventana especialidad");
-                return null;
+                return new vtnEspecialidad();
+ 
             }
             case PACIENTE ->
             {
                 System.out.println("ventana pacientes");
-                return null;
+            
+                return new vtnPacientes();
             }
             default ->
                 throw new AssertionError("Ese tipo no esta especificado");
@@ -49,27 +53,4 @@ public class VentanaRegistrableFactory
 
 }
 
-class prueba implements VentanaRegistrable
-{
 
-    @Override
-    public NodoML getNodoRegistrado()
-    {
-        Nodos n = new Nodos();
-        NodoML nodo1 = n.NodoDependencia("Estatal", "IMMS");
-        return nodo1;
-    }
-}
-
-class pruebaHospital implements VentanaRegistrable
-{
-
-    @Override
-    public NodoML getNodoRegistrado()
-    {
-        Nodos n = new Nodos();
-
-        NodoML nodo4 = n.NodoHospitales("matamoros n23", 1, "san juan");
-        return nodo4;
-    }
-}

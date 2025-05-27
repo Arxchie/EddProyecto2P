@@ -17,6 +17,7 @@ import edd_hospital_.vista.VtnGeneral2;
 import interfaces.VentanaRegistrable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,7 +31,7 @@ public class controladorCrud
     VtnGeneral2 ventanaGeneral;
     Navegador navegador;
     MultiListaDL multilista;
-   // MultiListaDL multilista; TODO  la multiliista no deberia de ir aqui deberia ir en otra clase que encapsule la logica de negocio de altas, bajas etc
+    // MultiListaDL multilista; TODO  la multiliista no deberia de ir aqui deberia ir en otra clase que encapsule la logica de negocio de altas, bajas etc
     NodoML nivelActual;
 
     public controladorCrud()
@@ -44,7 +45,7 @@ public class controladorCrud
         multilista = new MultiListaDL<>();
         navegador = new Navegador(NUMERO_NIVELES_NAVEGADOR);
         // llenarConDatosDePrueba();
-       // nivelActual = multilista.getR();
+        // nivelActual = multilista.getR();
         inicializarVtnGeneral();
         actualizarVista();
     }
@@ -68,6 +69,7 @@ public class controladorCrud
     public void entrarANivel(String nombre) throws NavegadorException
     {
         navegador.entrar(nombre);
+        System.out.println("nnnnnnnn" + nombre);
         String[] ruta = navegador.getRutaArray();
         nivelActual = multilista.buscarEnMultilista(ruta);
     }
@@ -75,6 +77,7 @@ public class controladorCrud
     public void actualizarVista()
     {
         MostrableEnTabla modeloTabla = ModeloTablaFactory.crearModeloDeTabla(navegador.getTipoNivelActual());
+        System.out.println(navegador.getTipoNivelActual());
         if (navegador.getTipoNivelActual() == Niveles.DEPENDENCIA)
         {
             nivelActual = multilista.getR();
@@ -143,9 +146,16 @@ public class controladorCrud
         {
             System.out.println("Nuevo");
             VentanaRegistrable v = VentanaRegistrableFactory.crearVentanaRegistrble(navegador.getTipoNivelActual());
-            multilista.inserta(v.getNodoRegistrado(), navegador.getRutaArray());
-            System.out.println("insertado");
-            actualizarVista();
+         
+            if (v.getNodoRegistrado() != null)
+            {
+                multilista.inserta(v.getNodoRegistrado(), navegador.getRutaArray());//TODO se necesita cambiar por una insersion no en multilista sino ya con la logica de negocio
+                JOptionPane.showMessageDialog(ventanaGeneral, "Registrado con exito");
+                actualizarVista();
+            } else
+            {
+                JOptionPane.showMessageDialog(ventanaGeneral, "NO SE REALIZO NINGUN REGISTRO");
+            }
 
         });
     }
