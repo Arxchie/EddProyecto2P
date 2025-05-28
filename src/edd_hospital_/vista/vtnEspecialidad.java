@@ -5,21 +5,27 @@ import cjb.ci.Validaciones;
 import edd_hospital_.modelo.Especialidad;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.VentanaRegistrable;
+import edd_hospital_.modelo.Datos;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class vtnEspecialidad extends javax.swing.JFrame implements VentanaRegistrable
+public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegistrable
 {
 
      private NodoML nodoEspecialidad;
 
      /**
       * Creates new form vtnEspecialidad
+      *
+      * @param parent
+      * @param modal
       */
-     public vtnEspecialidad()
+     public vtnEspecialidad(java.awt.Frame parent, boolean modal)
      {
+          super(parent, modal);
           initComponents();
-           this.setVisible(true);
+          CveEspecialidad.setText(String.format("E%03d", Datos.getNumeroDeRegistros() + 1));
+          this.setVisible(true);
      }
 
      /**
@@ -338,7 +344,7 @@ public class vtnEspecialidad extends javax.swing.JFrame implements VentanaRegist
           {
                public void run()
                {
-                    new vtnEspecialidad().setVisible(true);
+                    vtnEspecialidad vtn = new vtnEspecialidad(null, true);
                }
           });
      }
@@ -360,9 +366,9 @@ public class vtnEspecialidad extends javax.swing.JFrame implements VentanaRegist
      private javax.swing.JPanel jPanel3;
      // End of variables declaration//GEN-END:variables
 
-    @Override
-    public JButton getBotonAceptarRegistro()
-    {
-        return RegistrarEspBtn;
-    }
+     @Override
+     public JButton getBotonAceptarRegistro()
+     {
+          return RegistrarEspBtn;
+     }
 }

@@ -1,30 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package edd_hospital_.vista;
 
-
-
 import cjb.ci.CtrlInterfaz;
+import edd_hospital_.modelo.Datos;
 import edd_hospital_.modelo.Hospitales;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.VentanaRegistrable;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistrable
+public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistrable
 {
 
      private NodoML nodoHospital;
 
      /**
       * Creates new form vtnHospitales
+      *
+      * @param parent
+      * @param modal
       */
-     public vtnHospitales()
+     public vtnHospitales(java.awt.Frame parent, boolean modal)
      {
+          super(parent, modal);
           initComponents();
-           this.setVisible(true);
+          CveHospital.setText(String.format("H%03d", Datos.getNumeroDeRegistros()));
+          this.setVisible(true);
      }
 
      /**
@@ -42,16 +42,14 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
           RegresarBtn = new javax.swing.JButton();
           Hospital = new javax.swing.JPanel();
           jLabel6 = new javax.swing.JLabel();
-          NHospital = new javax.swing.JTextField();
           jLabel8 = new javax.swing.JLabel();
           CveHospital = new javax.swing.JTextField();
           DHospital = new javax.swing.JTextField();
           jLabel14 = new javax.swing.JLabel();
           RegistrarHospBtn = new javax.swing.JButton();
           Cancelar = new javax.swing.JButton();
+          OpcNivel = new javax.swing.JComboBox<>();
           jLabel7 = new javax.swing.JLabel();
-
-          setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
           Fondo.setBackground(new java.awt.Color(153, 153, 255));
           Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -96,16 +94,6 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
 
           jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
           jLabel6.setText("Cve:");
-
-          NHospital.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
-          NHospital.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-          NHospital.addKeyListener(new java.awt.event.KeyAdapter()
-          {
-               public void keyTyped(java.awt.event.KeyEvent evt)
-               {
-                    NHospitalKeyTyped(evt);
-               }
-          });
 
           jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
           jLabel8.setText("Dirección:");
@@ -157,6 +145,10 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
                }
           });
 
+          OpcNivel.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
+          OpcNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Opciones-", "1", "2", "3" }));
+          OpcNivel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
           javax.swing.GroupLayout HospitalLayout = new javax.swing.GroupLayout(Hospital);
           Hospital.setLayout(HospitalLayout);
           HospitalLayout.setHorizontalGroup(
@@ -175,13 +167,13 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
                                    .addComponent(RegistrarHospBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                    .addComponent(jLabel8))
                               .addGap(18, 18, 18)))
-                    .addGroup(HospitalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                         .addComponent(CveHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                         .addComponent(NHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                         .addComponent(DHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(HospitalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                         .addComponent(CveHospital, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                         .addComponent(DHospital, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                          .addGroup(HospitalLayout.createSequentialGroup()
                               .addGap(31, 31, 31)
-                              .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                              .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                         .addComponent(OpcNivel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap(357, Short.MAX_VALUE))
           );
           HospitalLayout.setVerticalGroup(
@@ -193,8 +185,8 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
                          .addComponent(CveHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(HospitalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                         .addComponent(NHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                         .addComponent(jLabel14))
+                         .addComponent(jLabel14)
+                         .addComponent(OpcNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(HospitalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                          .addComponent(DHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,7 +198,7 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
                     .addContainerGap(116, Short.MAX_VALUE))
           );
 
-          Fondo.add(Hospital, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+          Fondo.add(Hospital, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 750, -1));
 
           jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 36)); // NOI18N
           jLabel7.setText("-Hospitales-");
@@ -216,7 +208,7 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
           getContentPane().setLayout(layout);
           layout.setHorizontalGroup(
                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 899, Short.MAX_VALUE)
+               .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           );
           layout.setVerticalGroup(
                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,11 +217,6 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
 
           pack();
      }// </editor-fold>//GEN-END:initComponents
-
-     private void NHospitalKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_NHospitalKeyTyped
-     {//GEN-HEADEREND:event_NHospitalKeyTyped
-          // TODO add your handling code here:
-     }//GEN-LAST:event_NHospitalKeyTyped
 
      private void CveHospitalKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_CveHospitalKeyTyped
      {//GEN-HEADEREND:event_CveHospitalKeyTyped
@@ -246,7 +233,7 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
           try
           {
                String nombre = CveHospital.getText();
-               String nivelStr = NHospital.getText();
+               String nivelStr = (String) OpcNivel.getSelectedItem();
                String direccion = DHospital.getText();
 
                if (nombre.isEmpty() || nivelStr.isEmpty() || direccion.isEmpty())
@@ -287,11 +274,17 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
           return this.nodoHospital;
      }
 
+     @Override
+     public JButton getBotonAceptarRegistro()
+     {
+          return RegistrarHospBtn;
+     }
+
      private void CancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarActionPerformed
      {//GEN-HEADEREND:event_CancelarActionPerformed
           CtrlInterfaz.limpia(DHospital);
           CtrlInterfaz.limpia(CveHospital);
-          CtrlInterfaz.limpia(NHospital);
+          CtrlInterfaz.limpia(OpcNivel);
      }//GEN-LAST:event_CancelarActionPerformed
 
      private void RegresarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RegresarBtnActionPerformed
@@ -339,7 +332,7 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
           {
                public void run()
                {
-                    new vtnHospitales().setVisible(true);
+                    vtnHospitales vtn = new vtnHospitales(null, true);
                }
           });
      }
@@ -350,7 +343,7 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
      private javax.swing.JTextField DHospital;
      private javax.swing.JPanel Fondo;
      private javax.swing.JPanel Hospital;
-     private javax.swing.JTextField NHospital;
+     private javax.swing.JComboBox<String> OpcNivel;
      private javax.swing.JButton RegistrarHospBtn;
      private javax.swing.JButton RegresarBtn;
      private javax.swing.JLabel jLabel14;
@@ -360,9 +353,4 @@ public class vtnHospitales extends javax.swing.JFrame implements VentanaRegistra
      private javax.swing.JPanel jPanel1;
      // End of variables declaration//GEN-END:variables
 
-    @Override
-    public JButton getBotonAceptarRegistro()
-    {
-       return  RegistrarHospBtn;
-    }
 }
