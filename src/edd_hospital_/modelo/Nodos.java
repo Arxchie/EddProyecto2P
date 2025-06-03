@@ -4,6 +4,7 @@
  */
 package edd_hospital_.modelo;
 
+import edd_hospital_.multi_lista.ListaDLML;
 import edd_hospital_.multi_lista.NodoML;
 
 /**
@@ -24,6 +25,15 @@ public class Nodos
     {
         Hospitales objHospitales = new Hospitales(direccion, nivel, nombre);
         NodoML nodoHospitales = new NodoML(objHospitales, objHospitales.getClaveH());
+        if (nivel == 3)
+        {
+            ListaDLML auxiliar = new ListaDLML(nodoHospitales.getAbj());
+            NodoML neuro = NodoEspecialidades(10, 3, "Neurocirugia");
+            NodoML onco = NodoEspecialidades(10, 3, "Oncologia");
+            auxiliar.inserta(neuro);
+            auxiliar.inserta(onco);
+            nodoHospitales.setAbj(auxiliar.getR());
+        }
         return nodoHospitales;
     }
 
@@ -41,4 +51,12 @@ public class Nodos
         return nodoPaciente;
     }
 
+    public static void main(String[] args)
+    {
+        Nodos n = new Nodos();
+        NodoML nuevoHospital = n.NodoHospitales("San lucas n32", 3, "4 cadenas");
+        System.out.println(nuevoHospital.getAbj().getEt());
+        System.out.println(nuevoHospital.getAbj().getSig().getEt());
+
+    }
 }

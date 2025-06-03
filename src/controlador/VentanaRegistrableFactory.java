@@ -5,11 +5,13 @@
 package controlador;
 
 import edd_hospital_.modelo.Niveles;
+import edd_hospital_.multi_lista.NodoML;
 import edd_hospital_.vista.vtnDependencia;
 import edd_hospital_.vista.vtnEspecialidad;
 import edd_hospital_.vista.vtnHospitales;
 import edd_hospital_.vista.vtnPacientes;
 import interfaces.VentanaRegistrable;
+import javax.swing.JButton;
 
 /**
  *
@@ -25,7 +27,7 @@ public class VentanaRegistrableFactory
             case DEPENDENCIA ->
             {
                 System.out.println("ventana Dependencias");
-                return new vtnDependencia(null,true);
+                return new vtnDependencia(null, true);
 
             }
             case HOSPITAL ->
@@ -37,12 +39,12 @@ public class VentanaRegistrableFactory
             {
                 System.out.println("ventana especialidad");
                 return new vtnEspecialidad();
- 
+
             }
             case PACIENTE ->
             {
                 System.out.println("ventana pacientes");
-            
+
                 return new vtnPacientes();
             }
             default ->
@@ -52,5 +54,4 @@ public class VentanaRegistrableFactory
     }
 
 }
-
 

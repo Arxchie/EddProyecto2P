@@ -8,6 +8,7 @@ import edd_hospital_.modelo.Navegador;
 import edd_hospital_.modelo.NavegadorException;
 import edd_hospital_.modelo.Niveles;
 import edd_hospital_.modelo.Nodos;
+import edd_hospital_.modelo.cruds.CrudFactory;
 import edd_hospital_.modelo.modelosDeTablas.ModeloTablaFactory;
 import interfaces.MostrableEnTabla;
 import edd_hospital_.multi_lista.MultiListaDL;
@@ -17,8 +18,8 @@ import edd_hospital_.vista.VtnGeneral2;
 import interfaces.VentanaRegistrable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import interfaces.Crudable;
 
 /**
  *
@@ -31,7 +32,6 @@ public class controladorCrud
     VtnGeneral2 ventanaGeneral;
     Navegador navegador;
     MultiListaDL multilista;
-    // MultiListaDL multilista; TODO  la multiliista no deberia de ir aqui deberia ir en otra clase que encapsule la logica de negocio de altas, bajas etc
     NodoML nivelActual;
 
     public controladorCrud()
@@ -146,10 +146,12 @@ public class controladorCrud
         {
             System.out.println("Nuevo");
             VentanaRegistrable v = VentanaRegistrableFactory.crearVentanaRegistrble(navegador.getTipoNivelActual());
-         
+
             if (v.getNodoRegistrado() != null)
             {
-                multilista.inserta(v.getNodoRegistrado(), navegador.getRutaArray());//TODO se necesita cambiar por una insersion no en multilista sino ya con la logica de negocio
+
+                Crudable crud = CrudFactory.crearCrud(navegador.getTipoNivelActual());
+                crud.insertar(multilista, v.getNodoRegistrado(), navegador.getRutaArray());
                 JOptionPane.showMessageDialog(ventanaGeneral, "Registrado con exito");
                 actualizarVista();
             } else
