@@ -29,7 +29,7 @@ public class CrudFactory
             case ESPECIALIDAD ->
             {
 
-                return new CrudGenerico();
+                return new CrudEspecialidad();
             }
 
             case PACIENTE ->

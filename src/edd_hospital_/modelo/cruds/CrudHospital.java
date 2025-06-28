@@ -4,6 +4,7 @@
  */
 package edd_hospital_.modelo.cruds;
 
+import edd_hospital_.modelo.Hospitales;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.Crudable;
@@ -14,29 +15,48 @@ import interfaces.Crudable;
  */
 public class CrudHospital implements Crudable
 {
-
     @Override
     public void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        multilista.inserta(nodoAInsertar, ruta);
     }
 
     @Override
     public NodoML eliminar(MultiListaDL multilista, String... ruta)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return multilista.elimina(ruta);
     }
 
     @Override
     public NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String... ruta)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return multilista.buscarEnMultilista(ruta);
     }
 
     @Override
     public void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        NodoML nodoAActualizar = multilista.buscarEnMultilista(ruta);
+        if (nodoAActualizar == null)
+        {
+            throw new IllegalArgumentException("No se encontro el nodo a actualizar");
+        }
+        if (nuevo == null)
+        {
+            throw new IllegalArgumentException("El nuevo objeto no puede ser null");
+        }
+        nodoAActualizar.setObj(nuevo);
+        if (nuevo instanceof Hospitales h)
+        {
+            int nivel = h.getNivel();
+            if (nivel == 3)
+            {
+                System.out.println("subir a nivel 3");
+            } else
+            {
+                System.out.println("subir bajar de nivel 3");
+            }
+        }
     }
 
 }

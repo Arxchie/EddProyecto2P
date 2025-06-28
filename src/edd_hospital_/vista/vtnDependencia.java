@@ -4,14 +4,19 @@ import cjb.ci.CtrlInterfaz;
 import cjb.ci.Validaciones;
 import edd_hospital_.modelo.Datos;
 import edd_hospital_.modelo.Dependencia;
+import edd_hospital_.modelo.CreadorDeNodos;
 import edd_hospital_.multi_lista.NodoML;
+import interfaces.VentanaEditable;
 import interfaces.VentanaRegistrable;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
-public class vtnDependencia extends javax.swing.JDialog implements VentanaRegistrable
+public class vtnDependencia extends javax.swing.JDialog implements VentanaRegistrable, VentanaEditable
 {
 
     private NodoML nodoDependencia;
+    Dependencia objetoEditable;
 
     /**
      * Creates new form vtnDependencia
@@ -23,8 +28,8 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
     {
         super(parent, modal);
         initComponents();
-        CveDepen.setText(String.format("D%03d", Datos.getNumeroDeRegistros()+1));
-        this.setVisible(true);
+        jtfClave.setText(String.format("D%03d", Datos.getNumeroDeRegistros() + 1));
+        //    this.setVisible(true);
 
     }
 
@@ -42,9 +47,9 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
         jPanel1 = new javax.swing.JPanel();
         Dependencia = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        CveDepen = new javax.swing.JTextField();
+        jtfClave = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        OpcDepen = new javax.swing.JComboBox<>();
+        jcbTipo = new javax.swing.JComboBox<>();
         registrarDepBtn = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -78,32 +83,32 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
         jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
         jLabel5.setText("Cve Dependencia:");
 
-        CveDepen.setEditable(false);
-        CveDepen.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
-        CveDepen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        CveDepen.setFocusable(false);
-        CveDepen.addKeyListener(new java.awt.event.KeyAdapter()
+        jtfClave.setEditable(false);
+        jtfClave.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        jtfClave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jtfClave.setFocusable(false);
+        jtfClave.addKeyListener(new java.awt.event.KeyAdapter()
         {
             public void keyPressed(java.awt.event.KeyEvent evt)
             {
-                CveDepenKeyPressed(evt);
+                jtfClaveKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt)
             {
-                CveDepenKeyTyped(evt);
+                jtfClaveKeyTyped(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
         jLabel7.setText("Tipo: ");
 
-        OpcDepen.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
-        OpcDepen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Opciones-", "Federal", "Estatal", "Municipal", " ", " " }));
-        OpcDepen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jcbTipo.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
+        jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Opciones-", "Federal", "Estatal", "Municipal" }));
+        jcbTipo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         registrarDepBtn.setBackground(new java.awt.Color(153, 204, 255));
         registrarDepBtn.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
-        registrarDepBtn.setText("Registrar");
+        registrarDepBtn.setText("Guardar");
         registrarDepBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         registrarDepBtn.addActionListener(new java.awt.event.ActionListener()
         {
@@ -126,10 +131,17 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
         });
 
         jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 24)); // NOI18N
-        jLabel8.setText("Dependencia:");
+        jLabel8.setText("Nombre:");
 
         jtfNombre.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jtfNombre.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jtfNombreActionPerformed(evt);
+            }
+        });
         jtfNombre.addKeyListener(new java.awt.event.KeyAdapter()
         {
             public void keyPressed(java.awt.event.KeyEvent evt)
@@ -151,7 +163,7 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
                 .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(OpcDepen, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(DependenciaLayout.createSequentialGroup()
                             .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(registrarDepBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,16 +173,16 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
                             .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(DependenciaLayout.createSequentialGroup()
                                     .addGap(18, 18, 18)
-                                    .addComponent(CveDepen, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jtfClave, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(DependenciaLayout.createSequentialGroup()
                                     .addGap(136, 136, 136)
                                     .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
             .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(DependenciaLayout.createSequentialGroup()
                     .addGap(240, 240, 240)
                     .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(304, Short.MAX_VALUE)))
+                    .addContainerGap(134, Short.MAX_VALUE)))
         );
         DependenciaLayout.setVerticalGroup(
             DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,13 +190,13 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
                 .addContainerGap(89, Short.MAX_VALUE)
                 .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(CveDepen, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfClave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(OpcDepen, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64)
                 .addGroup(DependenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +209,7 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
                     .addContainerGap(199, Short.MAX_VALUE)))
         );
 
-        Fondo.add(Dependencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+        Fondo.add(Dependencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 630, -1));
 
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 36)); // NOI18N
         jLabel6.setText("-DEPENDENCIAS-");
@@ -209,26 +221,30 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-     private void CveDepenKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_CveDepenKeyTyped
-     {//GEN-HEADEREND:event_CveDepenKeyTyped
+    public void configurarParaEditable()
+    {
+        jtfNombre.setEditable(false);
+        jtfNombre.setFocusable(false);
+    }
+     private void jtfClaveKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfClaveKeyTyped
+     {//GEN-HEADEREND:event_jtfClaveKeyTyped
          Validaciones.validaAlfabeticos(evt, 15, jtfNombre.getText());
-     }//GEN-LAST:event_CveDepenKeyTyped
+     }//GEN-LAST:event_jtfClaveKeyTyped
 
      private void registrarDepBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_registrarDepBtnActionPerformed
      {//GEN-HEADEREND:event_registrarDepBtnActionPerformed
 
-       
          String nombre = jtfNombre.getText();
-         String tipo = (String) OpcDepen.getSelectedItem();
+         String tipo = (String) jcbTipo.getSelectedItem();
          if (nombre.isEmpty() || tipo.equals("-Opciones-"))
          {
              javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos",
                      "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
              return;
          }
-         
-         Dependencia nuevaDependencia = new Dependencia(tipo, nombre);
-         this.nodoDependencia = new NodoML<>(nuevaDependencia, nuevaDependencia.getClaveD());
+         CreadorDeNodos n = new CreadorDeNodos();
+         objetoEditable = new Dependencia(tipo, nombre,jtfClave.getText());
+         this.nodoDependencia = n.NodoDependencia(tipo, nombre);
          this.dispose();
      }//GEN-LAST:event_registrarDepBtnActionPerformed
 
@@ -243,57 +259,91 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
         return this.nodoDependencia;
     }
 
-    @Override
-    public JButton getBotonAceptarRegistro()
-    {
-        return registrarDepBtn;
-    }
      private void CancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarActionPerformed
      {//GEN-HEADEREND:event_CancelarActionPerformed
-         CtrlInterfaz.limpia(CveDepen);
+         CtrlInterfaz.limpia(jtfClave);
          CtrlInterfaz.limpia(jtfNombre);
-         CtrlInterfaz.limpia(OpcDepen);
+         CtrlInterfaz.limpia(jcbTipo);
      }//GEN-LAST:event_CancelarActionPerformed
+    @Override
+    public void cargarDatos(NodoML n)
+    {
 
+        if (n == null)
+        {
+            throw new IllegalArgumentException("No se pudieron cargar los datos porque el nodo es null");
+        }
+        if (n.getObj() instanceof Dependencia d)
+        {
+            jtfNombre.setText(d.getNombre());
+            jtfClave.setText(d.getClaveD());
+            jcbTipo.setSelectedItem(d.getTipo());
+        } else
+        {
+            throw new IllegalArgumentException("EL objeto es null o no es de tipo dependencia");
+        }
+
+    }
      private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfNombreKeyTyped
      {//GEN-HEADEREND:event_jtfNombreKeyTyped
          // TODO add your handling code here:
-      
-          Validaciones.validaAlfabeticos(evt, 10,"Error");
+
+         Validaciones.validaAlfabeticos(evt, 35, jtfNombre.getText());
      }//GEN-LAST:event_jtfNombreKeyTyped
 
-         
-    private void CveDepenKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_CveDepenKeyPressed
-    {//GEN-HEADEREND:event_CveDepenKeyPressed
+    public JTextField getJtfNombre()
+    {
+        return jtfNombre;
+    }
+
+    public void setJtfNombre(JTextField jtfNombre)
+    {
+        this.jtfNombre = jtfNombre;
+    }
+
+
+    private void jtfClaveKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfClaveKeyPressed
+    {//GEN-HEADEREND:event_jtfClaveKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CveDepenKeyPressed
+    }//GEN-LAST:event_jtfClaveKeyPressed
 
     private void jtfNombreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfNombreKeyPressed
     {//GEN-HEADEREND:event_jtfNombreKeyPressed
         // TODO add your handling code here:
-    
-          //  Validaciones.validaAlfabeticos(evt);
-       
+
+        //  Validaciones.validaAlfabeticos(evt);
+
     }//GEN-LAST:event_jtfNombreKeyPressed
+
+    private void jtfNombreActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jtfNombreActionPerformed
+    {//GEN-HEADEREND:event_jtfNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfNombreActionPerformed
     public static void main(String[] args)
     {
-        vtnDependencia vtn =new vtnDependencia(null, true);
-        
+        vtnDependencia vtn = new vtnDependencia(null, true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancelar;
-    private javax.swing.JTextField CveDepen;
     private javax.swing.JPanel Dependencia;
     private javax.swing.JPanel Fondo;
-    private javax.swing.JComboBox<String> OpcDepen;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> jcbTipo;
+    private javax.swing.JTextField jtfClave;
     private javax.swing.JTextField jtfNombre;
     private javax.swing.JButton registrarDepBtn;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public Object getObjetoEditado()
+    {
+        return objetoEditable;
+    }
 
 }

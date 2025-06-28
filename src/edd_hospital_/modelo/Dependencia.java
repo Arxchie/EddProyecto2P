@@ -21,6 +21,12 @@ public class Dependencia extends Datos
         this.tipo = tipo;
         this.claveD = generarClave('D');
     }
+    public Dependencia(String tipo, String nombre,String clave)
+    {
+        super(nombre);
+        this.tipo = tipo;
+        this.claveD=clave;
+    }
 
     /**
      * @return the tipo

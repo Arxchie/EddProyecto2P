@@ -6,7 +6,7 @@ package edd_hospital_.modelo.cruds;
 
 import edd_hospital_.modelo.Especialidad;
 import edd_hospital_.modelo.Hospitales;
-import edd_hospital_.modelo.Nodos;
+import edd_hospital_.modelo.CreadorDeNodos;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.Crudable;
@@ -75,17 +75,23 @@ public class CrudEspecialidad implements Crudable
     public void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta)
     {
         NodoML nodoAActualizar = multilista.buscarEnMultilista(ruta);
-        if (nodoAActualizar != null)
+        if (nodoAActualizar == null)
         {
-            nodoAActualizar.setObj(nuevo);
+            throw  new IllegalArgumentException("No se encontro el nodo a actualizar");
         }
+        if (nuevo != null)
+        {
+            throw  new IllegalArgumentException("El nuevo objeto no puede ser null");
+        }
+        nodoAActualizar.setObj(nuevo);
+
     }
 
     public static void main(String[] args)
     {
         CrudEspecialidad c = new CrudEspecialidad();
         MultiListaDL m = new MultiListaDL();
-        Nodos n = new Nodos();
+        CreadorDeNodos n = new CreadorDeNodos();
         m.inserta(n.NodoDependencia("Estatal", "IMSS"));
         m.inserta(n.NodoHospitales("San juan", 1, "Hospital san calos"), "D001");
         try

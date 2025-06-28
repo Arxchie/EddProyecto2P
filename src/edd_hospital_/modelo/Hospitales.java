@@ -22,6 +22,13 @@ public class Hospitales extends Datos
         this.nivel = nivel;
         this.claveH = generarClave('H');
     }
+    public Hospitales(String direc, int nivel, String nombre,String clave)
+    {
+        super(nombre);
+        this.direccion = direc;
+        this.nivel = nivel;
+        this.claveH = clave;
+    }
 
     /**
      * @return the direccion

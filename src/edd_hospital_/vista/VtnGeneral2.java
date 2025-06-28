@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package edd_hospital_.vista;
 
 import interfaces.MostrableEnTabla;
@@ -16,102 +12,98 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author saulo
- */
 public class VtnGeneral2 extends javax.swing.JFrame
 {
 
-    DefaultTableModel modeloTabla = new DefaultTableModel()
-    {
-        @Override
-        public boolean isCellEditable(int row, int column)
-        {
-            return false; // ninguna celda editable
-        }
-    };
+     DefaultTableModel modeloTabla = new DefaultTableModel()
+     {
+          @Override
+          public boolean isCellEditable(int row, int column)
+          {
+               return false; // ninguna celda editable
+          }
+     };
 
-    public VtnGeneral2()
-    {
+     public VtnGeneral2()
+     {
 
-        initComponents();
+          initComponents();
 
-    }
+     }
 
-    public void actualizarPanelNavegacion(List<String> ruta)
-    {
-        panelNavegacion.removeAll(); // Limpiar el panel antes de actualizarlo
-        for (int i = 0; i < ruta.size(); i++)
-        {
-            String s = ruta.get(i);
-            JLabel ubicacion = new JLabel(s);
-            ubicacion.setFont(new Font("Arial", Font.PLAIN, 14));
-            panelNavegacion.add(ubicacion);
-            // Si no es el último elemento, agregar flecha
-            try
-            {
-                if (i < ruta.size() - 1)
-                {
-                    JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("/edd_hospital_/vista/imagenes/flecha.png")));
+     public void actualizarPanelNavegacion(List<String> ruta)
+     {
+          panelNavegacion.removeAll();
+          for (int i = 0; i < ruta.size(); i++)
+          {
+               String s = ruta.get(i);
+               JLabel ubicacion = new JLabel(s);
+               ubicacion.setFont(new Font("Arial", Font.PLAIN, 14));
+               panelNavegacion.add(ubicacion);
+               // Si no es el último elemento, agregar flecha
+               try
+               {
+                    if (i < ruta.size() - 1)
+                    {
+                         JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("/edd_hospital_/vista/imagenes/flecha.png")));
+                         panelNavegacion.add(flecha);
+                    }
+               } catch (Exception e)
+               {
+                    JLabel flecha = new JLabel(">");
                     panelNavegacion.add(flecha);
-                }
-            } catch (Exception e)
-            {
-                JLabel flecha = new JLabel(">");
-                panelNavegacion.add(flecha);
-                System.out.println(e.getMessage());
-            }
-        }
-        panelNavegacion.revalidate(); // Actualiza la interfaz
-        panelNavegacion.repaint();    // Repinta el panel para mostrar los cambios
-    }
+                    System.out.println(e.getMessage());
+               }
+          }
+          panelNavegacion.revalidate(); // Actualiza la interfaz
+          panelNavegacion.repaint();    // Repinta el panel para mostrar los cambios
+     }
 
-    public void mostrarEnLaTabla(MostrableEnTabla modelProvider, NodoML raiz)
-    {
-        if (modelProvider == null)
-        {
-            return;
-        }
-        resetearModeloTabla();
-        for (String cabecera : modelProvider.getNombreCabeceras())
-        {
-            modeloTabla.addColumn(cabecera);
-        }
-        if (raiz != null)
-        {
-            for (Object fila[] : modelProvider.getDatos(raiz))
-            {
-                modeloTabla.addRow(fila);
-            }
-        }
-        jtbTabla.setModel(modeloTabla);
-        jPanel1.revalidate();
-        jPanel1.repaint();
-    }
+     public void mostrarEnLaTabla(MostrableEnTabla modelProvider, NodoML raiz)
+     {
+          if (modelProvider == null)
+          {
+               return;
+          }
+          resetearModeloTabla();
+          for (String cabecera : modelProvider.getNombreCabeceras())
+          {
+               modeloTabla.addColumn(cabecera);
+          }
+          if (raiz != null)
+          {
+               for (Object fila[] : modelProvider.getDatos(raiz))
+               {
+                    modeloTabla.addRow(fila);
+               }
+          }
+          jtbTabla.setModel(modeloTabla);
+          jPanel1.revalidate();
+          jPanel1.repaint();
+     }
 
-    public void resetearModeloTabla()
-    {
-        modeloTabla.setColumnCount(0);
-        modeloTabla.setRowCount(0);
-    }
+     public void resetearModeloTabla()
+     {
+          modeloTabla.setColumnCount(0);
+          modeloTabla.setRowCount(0);
+     }
 
-    public JButton getBtnVolver()
-    {
-        return btnVolver;
-    }
+     public JButton getBtnVolver()
+     {
+          return btnVolver;
+     }
 
-    public void setBtnVolver(JButton btnVolver)
-    {
-        this.btnVolver = btnVolver;
-    }
+     public void setBtnVolver(JButton btnVolver)
+     {
+          this.btnVolver = btnVolver;
+     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+     /**
+      * This method is called from within the constructor to initialize the
+      * form. WARNING: Do NOT modify this code. The content of this method is
+      * always regenerated by the Form Editor.
+      */
+     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
@@ -121,8 +113,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jPanel4 = new javax.swing.JPanel();
         jpnBotones = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jpnSuperior = new javax.swing.JPanel();
         panelNavegacion = new javax.swing.JPanel();
@@ -166,9 +158,16 @@ public class VtnGeneral2 extends javax.swing.JFrame
             }
         });
 
-        jButton2.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Modificar");
+        btnModificar.setText("Modificar");
 
         jButton4.setText("Abir");
         jButton4.addActionListener(new java.awt.event.ActionListener()
@@ -187,9 +186,9 @@ public class VtnGeneral2 extends javax.swing.JFrame
                 .addContainerGap(410, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
                 .addGap(52, 52, 52)
-                .addComponent(jButton3)
+                .addComponent(btnModificar)
                 .addGap(45, 45, 45)
-                .addComponent(jButton2)
+                .addComponent(btnEliminar)
                 .addGap(45, 45, 45)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
@@ -200,8 +199,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
                 .addContainerGap(34, Short.MAX_VALUE)
                 .addGroup(jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnModificar)
                     .addComponent(jButton4))
                 .addGap(16, 16, 16))
         );
@@ -298,128 +297,153 @@ public class VtnGeneral2 extends javax.swing.JFrame
 
     private void jtbTablaKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtbTablaKeyPressed
     {//GEN-HEADEREND:event_jtbTablaKeyPressed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
 
     }//GEN-LAST:event_jtbTablaKeyPressed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevoActionPerformed
     {//GEN-HEADEREND:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        
+         // TODO add your handling code here:
+
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    public JButton getBtnNuevo()
-    {
-        return btnNuevo;
-    }
+     public JButton getBtnNuevo()
+     {
+          return btnNuevo;
+     }
 
-    public void setBtnNuevo(JButton btnNuevo)
-    {
-        this.btnNuevo = btnNuevo;
-    }
+     public void setBtnNuevo(JButton btnNuevo)
+     {
+          this.btnNuevo = btnNuevo;
+     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton4ActionPerformed
     {//GEN-HEADEREND:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jtbTablaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtbTablaMouseClicked
     {//GEN-HEADEREND:event_jtbTablaMouseClicked
-        // TODO add your handling code here:
+         // TODO add your handling code here:
 
 
     }//GEN-LAST:event_jtbTablaMouseClicked
 
-    public JLabel getLblTitulo()
-    {
-        return lblTitulo;
-    }
+     public JLabel getLblTitulo()
+     {
+          return lblTitulo;
+     }
 
-    public void setLblTitulo(JLabel lblTitulo)
-    {
-        this.lblTitulo = lblTitulo;
-    }
+     public void setLblTitulo(JLabel lblTitulo)
+     {
+          this.lblTitulo = lblTitulo;
+     }
 
-    public JTable getJtbTabla()
-    {
-        return jtbTabla;
-    }
+     public JTable getJtbTabla()
+     {
+          return jtbTabla;
+     }
 
-    public void setJtbTabla(JTable jtbTabla)
-    {
-        this.jtbTabla = jtbTabla;
-    }
+     public void setJtbTabla(JTable jtbTabla)
+     {
+          this.jtbTabla = jtbTabla;
+     }
 
-    public boolean esDobleClickIzquierdo(MouseEvent evt)
-    {
-        return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
-    }
+     public boolean esDobleClickIzquierdo(MouseEvent evt)
+     {
+          return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
+     }
 
-    public String getClaveSeleccionado()
-    {
-        String claveSeleccionado = null;
-        int filaSeleccionada = jtbTabla.getSelectedRow();
-        int columna = 0;
-        if (filaSeleccionada != -1)
-        {
-            Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
-            claveSeleccionado = (String) valor;
-        }
-        return claveSeleccionado;
-    }
+     public String getClaveSeleccionado()
+     {
+          String claveSeleccionado = null;
+          int filaSeleccionada = jtbTabla.getSelectedRow();
+          int columna = 0;
+          if (filaSeleccionada != -1)
+          {
+               Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
+               claveSeleccionado = (String) valor;
+          }
+          return claveSeleccionado;
+     }
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnVolverActionPerformed
     {//GEN-HEADEREND:event_btnVolverActionPerformed
 
 
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
+    public JButton getBtnModificar()
     {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(VtnGeneral2.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() ->
-        {
-            new VtnGeneral2().setVisible(true);
-        });
-
+        return btnModificar;
     }
 
+    public void setBtnModificar(JButton btnModificar)
+    {
+        this.btnModificar = btnModificar;
+    }
+
+    public JButton getBtnEliminar()
+    {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(JButton btnEliminar)
+    {
+        this.btnEliminar = btnEliminar;
+    }
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
+    {//GEN-HEADEREND:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+     /**
+      * @param args the command line arguments
+      */
+     public static void main(String args[])
+     {
+          /* Set the Nimbus look and feel */
+          //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+          /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+           */
+          try
+          {
+               for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+               {
+                    if ("Nimbus".equals(info.getName()))
+                    {
+                         javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                         break;
+
+                    }
+               }
+          } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
+          {
+               java.util.logging.Logger.getLogger(VtnGeneral2.class
+                       .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+          }
+          //</editor-fold>
+          //</editor-fold>
+
+          //</editor-fold>
+
+          /* Create and display the form */
+          java.awt.EventQueue.invokeLater(() ->
+          {
+               new VtnGeneral2().setVisible(true);
+          });
+
+     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import edd_hospital_.modelo.Niveles;
@@ -13,10 +9,6 @@ import edd_hospital_.vista.vtnPacientes;
 import interfaces.VentanaRegistrable;
 import javax.swing.JButton;
 
-/**
- *
- * @author HP
- */
 public class VentanaRegistrableFactory
 {
 
@@ -33,25 +25,27 @@ public class VentanaRegistrableFactory
             case HOSPITAL ->
             {
                 System.out.println("ventana Hospitales");
-                return new vtnHospitales();
+                return new vtnHospitales(null,true);
             }
             case ESPECIALIDAD ->
             {
                 System.out.println("ventana especialidad");
-                return new vtnEspecialidad();
+                return new vtnEspecialidad(null,true);
 
             }
             case PACIENTE ->
             {
                 System.out.println("ventana pacientes");
 
-                return new vtnPacientes();
+                return new vtnPacientes(null,true);
             }
             default ->
                 throw new AssertionError("Ese tipo no esta especificado");
         }
 
-    }
+     
+
+     }
 
 }
 

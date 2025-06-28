@@ -11,10 +11,11 @@ import javax.swing.JButton;
  *
  * @author HP
  */
-public interface VentanaRegistrable
+public interface VentanaEditable
 {
 
-    NodoML getNodoRegistrado();
+    Object getObjetoEditado();
+    void cargarDatos(NodoML n);
     void setVisible(boolean visibles);
 
 }

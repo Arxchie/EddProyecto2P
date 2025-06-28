@@ -53,6 +53,18 @@ public class Navegador
         }
         return null;
     }
+    public static  String[] crearRutaCompleta(String[] ruta, String elementoAAgregarAlFinal)
+    {
+        if (elementoAAgregarAlFinal == null || elementoAAgregarAlFinal.isEmpty())
+        {
+            throw new IllegalArgumentException("El elemento a agregar no puede ser nulo o vacío");
+        }
+
+        String[] nuevaRuta = new String[ruta.length + 1];
+        System.arraycopy(ruta, 0, nuevaRuta, 0, ruta.length); // Copia los elementos actuales
+        nuevaRuta[nuevaRuta.length - 1] = elementoAAgregarAlFinal; // Agrega el nuevo al final
+        return nuevaRuta;
+    }
 
     public int getNivelIndex(String nivel)
     {

@@ -7,7 +7,6 @@ package controlador;
 import edd_hospital_.modelo.Navegador;
 import edd_hospital_.modelo.NavegadorException;
 import edd_hospital_.modelo.Niveles;
-import edd_hospital_.modelo.Nodos;
 import edd_hospital_.modelo.cruds.CrudFactory;
 import edd_hospital_.modelo.modelosDeTablas.ModeloTablaFactory;
 import interfaces.MostrableEnTabla;
@@ -20,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import interfaces.Crudable;
+import interfaces.VentanaEditable;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -28,7 +29,7 @@ import interfaces.Crudable;
 public class controladorCrud
 {
 
-    private static final int NUMERO_NIVELES_NAVEGADOR = 4;
+    private static final int NUMERO_NIVELES_ENTRABLES_NAVEGADOR = 3;
     VtnGeneral2 ventanaGeneral;
     Navegador navegador;
     MultiListaDL multilista;
@@ -43,45 +44,17 @@ public class controladorCrud
     {
         ventanaGeneral = new VtnGeneral2();
         multilista = new MultiListaDL<>();
-        navegador = new Navegador(NUMERO_NIVELES_NAVEGADOR);
-        // llenarConDatosDePrueba();
-        // nivelActual = multilista.getR();
+        navegador = new Navegador(NUMERO_NIVELES_ENTRABLES_NAVEGADOR);
         inicializarVtnGeneral();
         actualizarVista();
-    }
-
-    private void llenarConDatosDePrueba()
-    {
-        Nodos n = new Nodos();
-        NodoML nodo1 = n.NodoDependencia("Estatal", "IMMS");
-        NodoML nodo2 = n.NodoDependencia("Estatal", "ISTE");
-        NodoML nodo3 = n.NodoDependencia("Estatal", "ISEMYN");
-        NodoML nodo4 = n.NodoHospitales("matamoros n23", 1, "san juan");
-        NodoML nodo5 = n.NodoHospitales("san ROman n32", 2, " Koto Hospital");
-        multilista.inserta(nodo1);
-        multilista.inserta(nodo2);
-        multilista.inserta(nodo3);
-        multilista.inserta(nodo4, nodo1.getEt());
-        multilista.inserta(nodo5, nodo1.getEt(), nodo4.getEt());
-        System.out.println(multilista.desp());
-    }
-
-    public void entrarANivel(String nombre) throws NavegadorException
-    {
-        navegador.entrar(nombre);
-        System.out.println("nnnnnnnn" + nombre);
-        String[] ruta = navegador.getRutaArray();
-        nivelActual = multilista.buscarEnMultilista(ruta);
     }
 
     public void actualizarVista()
     {
         MostrableEnTabla modeloTabla = ModeloTablaFactory.crearModeloDeTabla(navegador.getTipoNivelActual());
-        System.out.println(navegador.getTipoNivelActual());
         if (navegador.getTipoNivelActual() == Niveles.DEPENDENCIA)
         {
-            nivelActual = multilista.getR();
-            ventanaGeneral.mostrarEnLaTabla(modeloTabla, nivelActual);
+            ventanaGeneral.mostrarEnLaTabla(modeloTabla, multilista.getR());
         } else
         {
             ventanaGeneral.mostrarEnLaTabla(modeloTabla, nivelActual.getAbj());
@@ -144,22 +117,101 @@ public class controladorCrud
         });
         ventanaGeneral.getBtnNuevo().addActionListener((e) ->
         {
-            System.out.println("Nuevo");
-            VentanaRegistrable v = VentanaRegistrableFactory.crearVentanaRegistrble(navegador.getTipoNivelActual());
 
+            VentanaRegistrable v = VentanaRegistrableFactory.crearVentanaRegistrble(navegador.getTipoNivelActual());
+            v.setVisible(true);
             if (v.getNodoRegistrado() != null)
             {
-
                 Crudable crud = CrudFactory.crearCrud(navegador.getTipoNivelActual());
-                crud.insertar(multilista, v.getNodoRegistrado(), navegador.getRutaArray());
-                JOptionPane.showMessageDialog(ventanaGeneral, "Registrado con exito");
-                actualizarVista();
+                try
+                {
+                    crud.insertar(multilista, v.getNodoRegistrado(), navegador.getRutaArray());
+                    JOptionPane.showMessageDialog(ventanaGeneral, "Registrado con exito");
+                    actualizarVista();
+                } catch (RuntimeException ex)
+                {
+                    JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                }
             } else
             {
                 JOptionPane.showMessageDialog(ventanaGeneral, "NO SE REALIZO NINGUN REGISTRO");
             }
 
         });
+        ventanaGeneral.getBtnModificar().addActionListener((e) ->
+        {
+            String seleccionado = ventanaGeneral.getClaveSeleccionado();
+
+            if (seleccionado != null)
+            {
+                String rutaCompleta[] = Navegador.crearRutaCompleta(navegador.getRutaArray(), seleccionado);
+                NodoML nodoSeleccionado = multilista.buscarEnMultilista(rutaCompleta);
+                if (nodoSeleccionado != null)
+                {
+                    VentanaEditable v = VentanaEditableFactory.crearVentanaEditable(navegador.getTipoNivelActual());
+                    v.cargarDatos(nodoSeleccionado);
+                    v.setVisible(true);
+                    Object objetoEditado = v.getObjetoEditado();
+                    if (objetoEditado != null)
+                    {
+                        Crudable crud = CrudFactory.crearCrud(navegador.getTipoNivelActual());
+                        try
+                        {
+                            crud.actualizarNodo(multilista, objetoEditado, rutaCompleta);
+                            JOptionPane.showMessageDialog(ventanaGeneral, "Datos actualizados con éxito");
+                            actualizarVista();
+
+                        } catch (RuntimeException ex)
+                        {
+                            JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                        }
+                    }
+
+                } else
+                {
+                    JOptionPane.showMessageDialog(ventanaGeneral, "No se encontró el elemento seleccionado");
+                }
+
+            } else
+            {
+                JOptionPane.showMessageDialog(ventanaGeneral, "Debe seleccionar un elemento");
+            }
+
+//            VentanaEditable v = VentanaEditableFactory.crearVentanaEditable(navegador.getTipoNivelActual());
+//            v.setVisible(true);
+        });
+        ventanaGeneral.getBtnEliminar().addActionListener((ActionEvent e) ->
+        {
+            String cveSeleccionado = ventanaGeneral.getClaveSeleccionado();
+            if (cveSeleccionado != null)
+            {
+                int opcion = JOptionPane.showConfirmDialog(
+                        ventanaGeneral,
+                        "¿Estas seguro de que deseas eliminar el elemento seleccionado?",
+                        "Confirmar eliminación",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION)
+                {
+                    Crudable crud = CrudFactory.crearCrud(navegador.getTipoNivelActual());
+                    crud.eliminar(multilista, navegador.crearRutaCompleta(navegador.getRutaArray(), cveSeleccionado));
+                    actualizarVista();
+                }
+            } else
+            {
+                JOptionPane.showMessageDialog(ventanaGeneral, "No hay un elemento seleccionado para eliminar.");
+            }
+        });
+
+    }
+
+    public void entrarANivel(String nombre) throws NavegadorException
+    {
+        navegador.entrar(nombre);
+        String[] ruta = navegador.getRutaArray();
+        nivelActual = multilista.buscarEnMultilista(ruta);
+
     }
 
     private void volver()
