@@ -105,8 +105,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
       */
      @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jpnLateral = new javax.swing.JPanel();
@@ -141,7 +140,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
         );
         jpnLateralLayout.setVerticalGroup(
             jpnLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 503, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         jPanel1.add(jpnLateral, java.awt.BorderLayout.LINE_START);
@@ -150,19 +149,15 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
@@ -170,10 +165,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
         btnModificar.setText("Modificar");
 
         jButton4.setText("Abir");
-        jButton4.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
@@ -183,7 +176,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jpnBotonesLayout.setHorizontalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnBotonesLayout.createSequentialGroup()
-                .addContainerGap(410, Short.MAX_VALUE)
+                .addContainerGap(379, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
                 .addGap(52, 52, 52)
                 .addComponent(btnModificar)
@@ -212,10 +205,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
         panelNavegacion.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 15));
 
         btnVolver.setText("volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVolverActionPerformed(evt);
             }
         });
@@ -231,14 +222,12 @@ public class VtnGeneral2 extends javax.swing.JFrame
             .addGroup(jpnSuperiorLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(jpnSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpnSuperiorLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(panelNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, 775, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpnSuperiorLayout.createSequentialGroup()
                         .addComponent(btnVolver)
                         .addGap(233, 233, 233)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jpnSuperiorLayout.setVerticalGroup(
             jpnSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,12 +245,10 @@ public class VtnGeneral2 extends javax.swing.JFrame
 
         jtbTabla.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jtbTabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
 
             }
         ));
@@ -269,17 +256,13 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jtbTabla.setRequestFocusEnabled(false);
         jtbTabla.setRowHeight(25);
         jtbTabla.setSelectionBackground(new java.awt.Color(153, 153, 255));
-        jtbTabla.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtbTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtbTablaMouseClicked(evt);
             }
         });
-        jtbTabla.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        jtbTabla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtbTablaKeyPressed(evt);
             }
         });
@@ -356,11 +339,11 @@ public class VtnGeneral2 extends javax.swing.JFrame
           return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
      }
 
-     public String getClaveSeleccionado()
+     public String getNombreSeleccionado()
      {
           String claveSeleccionado = null;
           int filaSeleccionada = jtbTabla.getSelectedRow();
-          int columna = 0;
+          int columna = 1;
           if (filaSeleccionada != -1)
           {
                Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);

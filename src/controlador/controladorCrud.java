@@ -109,7 +109,7 @@ public class controladorCrud {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     try {
-                        String seleccionado = ventanaGeneral.getClaveSeleccionado();
+                        String seleccionado = ventanaGeneral.getNombreSeleccionado();
                         entrarANivel(seleccionado);
                         actualizarVista();
                     } catch (NavegadorException ex) {
@@ -148,7 +148,7 @@ public class controladorCrud {
         });
         ventanaGeneral.getBtnModificar().addActionListener((e)
                 -> {
-            String seleccionado = ventanaGeneral.getClaveSeleccionado();
+            String seleccionado = ventanaGeneral.getNombreSeleccionado();
 
             if (seleccionado != null) {
                 String rutaCompleta[] = Navegador.crearRutaCompleta(navegador.getRutaArray(), seleccionado);
@@ -185,7 +185,7 @@ public class controladorCrud {
         });
         ventanaGeneral.getBtnEliminar().addActionListener((ActionEvent e)
                 -> {
-            String cveSeleccionado = ventanaGeneral.getClaveSeleccionado();
+            String cveSeleccionado = ventanaGeneral.getNombreSeleccionado();
             if (cveSeleccionado != null) {
                 int opcion = JOptionPane.showConfirmDialog(
                         ventanaGeneral,
