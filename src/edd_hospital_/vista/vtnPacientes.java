@@ -40,8 +40,7 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         Fondo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -71,10 +70,8 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         RegresarBtn.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         RegresarBtn.setText("Regresar");
         RegresarBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        RegresarBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        RegresarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegresarBtnActionPerformed(evt);
             }
         });
@@ -118,27 +115,21 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
 
         jtfVigencia.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfVigencia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jtfVigencia.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyTyped(java.awt.event.KeyEvent evt)
-            {
+        jtfVigencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtfVigenciaKeyTyped(evt);
             }
         });
 
         jtfNombre.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jtfNombre.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jtfNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfNombreActionPerformed(evt);
             }
         });
-        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyTyped(java.awt.event.KeyEvent evt)
-            {
+        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtfNombreKeyTyped(evt);
             }
         });
@@ -147,10 +138,8 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         btnGuardar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnGuardar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
@@ -162,17 +151,13 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         jtfClave.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfClave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jtfClave.setFocusable(false);
-        jtfClave.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jtfClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfClaveActionPerformed(evt);
             }
         });
-        jtfClave.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyTyped(java.awt.event.KeyEvent evt)
-            {
+        jtfClave.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtfClaveKeyTyped(evt);
             }
         });
@@ -181,10 +166,8 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         Cancelar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         Cancelar.setText("Cancelar");
         Cancelar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        Cancelar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelarActionPerformed(evt);
             }
         });
@@ -246,11 +229,10 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
                             .addComponent(jtfClave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(PacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel11)
-                        .addComponent(jtfVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11)
+                    .addComponent(jtfVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PacienteLayout.createSequentialGroup()
-                        .addGroup(PacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -340,7 +322,6 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
 
      private void CancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarActionPerformed
      {//GEN-HEADEREND:event_CancelarActionPerformed
-         CtrlInterfaz.limpia(jtfClave);
          CtrlInterfaz.limpia(jtfNombre);
 
          CtrlInterfaz.limpia(jcbEstatus);

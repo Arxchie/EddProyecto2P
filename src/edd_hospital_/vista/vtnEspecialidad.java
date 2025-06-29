@@ -364,7 +364,6 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
      private void CancelarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarBtnActionPerformed
      {//GEN-HEADEREND:event_CancelarBtnActionPerformed
          CtrlInterfaz.limpia(jtfCamas);
-         CtrlInterfaz.limpia(jtfClave);
          CtrlInterfaz.limpia(jtfMedicos);
      }//GEN-LAST:event_CancelarBtnActionPerformed
 

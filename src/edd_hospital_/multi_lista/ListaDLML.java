@@ -8,60 +8,47 @@ package edd_hospital_.multi_lista;
  *
  * @author Joabp
  */
-public class ListaDLML<T>
-{
+
+public class ListaDLML<T> {
 
     private NodoML<T> r;
 
-    public ListaDLML()
-    {
+    public ListaDLML() {
     }
 
-    public ListaDLML(NodoML<T> r)
-    {
+    public ListaDLML(NodoML<T> r) {
         this.r = r;
     }
 
     /**
      * @return the r
      */
-    public NodoML<T> getR()
-    {
+    public NodoML<T> getR() {
         return r;
     }
 
     /**
      * @param r the r to set
      */
-    public void setR(NodoML<T> r)
-    {
+    public void setR(NodoML<T> r) {
         this.r = r;
     }
 
-    public void inserta(NodoML<T> n)
-    {
-        if (n == null)
-        {
+    public void inserta(NodoML<T> n) {
+        if (n == null) {
             System.out.println("No se puede insertar un nodo nulo.");
-        } else
-        {
-            if (getR() == null)
-            {
+        } else {
+            if (getR() == null) {
                 setR((NodoML<T>) n);
-            } else
-            {
-                if (getR().getEt().compareTo(n.getEt()) > 0)
-                {
+            } else {
+                if (getR().getEt().compareTo(n.getEt()) > 0) {
                     n.setSig(getR());
                     getR().setAnt(n);
                     setR((NodoML<T>) n);
-                } else
-                {
+                } else {
                     NodoML aux = getR();
-                    while (aux.getSig() != null)
-                    {
-                        if (aux.getSig().getEt().compareTo(n.getEt()) > 0)
-                        {
+                    while (aux.getSig() != null) {
+                        if (aux.getSig().getEt().compareTo(n.getEt()) > 0) {
                             n.setSig(aux.getSig());
                             n.setAnt(aux);
                             aux.getSig().setAnt(n);
@@ -77,69 +64,54 @@ public class ListaDLML<T>
         }
     }
 
-    public String desp()
-    {
-        if (getR() == null)
-        {
+    public String desp() {
+        if (getR() == null) {
             return "Lista vacia";
         }
         String s = "";
         NodoML aux = getR();
-        while (aux != null)
-        {
+        while (aux != null) {
             s += aux.getEt() + "\t";
-            if (aux.getSig() == null)
-            {
+            if (aux.getSig() == null) {
                 break;
-            } else
-            {
+            } else {
                 aux = aux.getSig();
             }
         }
         s += "\n";
-        while (aux != null)
-        {
+        while (aux != null) {
             s += aux.getEt() + "\t";
             aux = aux.getAnt();
         }
         return s;
     }
 
-    public String despRecursivo(NodoML<T> aux, String s)
-    {
-        if (aux != null)
-        {
+    public String despRecursivo(NodoML<T> aux, String s) {
+        if (aux != null) {
             s += aux.getEt() + "\t" + despRecursivo(aux.getSig(), s);
         }
         return s;
     }
 
-    public NodoML elimina(NodoML <T>n)
-    {
-        if (getR() == null || getR().getEt().compareTo(n.getEt()) > 0)
-        {
+    public NodoML elimina(NodoML<T> n) {
+        if (getR() == null || getR().getEt().compareTo(n.getEt()) > 0) {
             return null;
         }
         NodoML eliminado = null;
-        if (getR().getEt().compareTo(n.getEt()) == 0)
-        {
+        if (getR().getEt().compareTo(n.getEt()) == 0) {
             eliminado = getR();
             setR((NodoML<T>) getR().getSig());
-            if (getR() != null)
-            {
+            if (getR() != null) {
                 getR().setAnt(null);
             }
             return eliminado;
         }
         NodoML aux = getR();
-        while (aux.getSig() != null)
-        {
-            if (aux.getSig().getEt().compareTo(n.getEt()) == 0)
-            {
+        while (aux.getSig() != null) {
+            if (aux.getSig().getEt().compareTo(n.getEt()) == 0) {
                 eliminado = aux.getSig();
                 aux.setSig(eliminado.getSig());
-                if (eliminado.getSig() != null)
-                {
+                if (eliminado.getSig() != null) {
                     eliminado.getSig().setAnt(aux);
                 }
                 eliminado.setAnt(null);

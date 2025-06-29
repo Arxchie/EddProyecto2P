@@ -12,8 +12,7 @@ import java.awt.HeadlessException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistrable,VentanaEditable
-{
+public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistrable, VentanaEditable {
 
     private NodoML nodoHospital;
     Hospitales objetoEditable;
@@ -24,35 +23,30 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
      * @param parent
      * @param modal
      */
-    public vtnHospitales(java.awt.Frame parent, boolean modal)
-    {
+    public vtnHospitales(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        jtfClave.setText(String.format("H%03d", Datos.getNumeroDeRegistros()));
+        jtfClave.setText(String.format("H%03d", Datos.getNumeroDeRegistros() + 1));
 
     }
 
-    public void configurarParaEditable()
-    {
+    public void configurarParaEditable() {
         jtfNombre.setEditable(false);
         jtfNombre.setFocusable(false);
-        
-    }
-    @Override
-        public void cargarDatos(NodoML n)
-    {
 
-        if (n == null)
-        {
+    }
+
+    @Override
+    public void cargarDatos(NodoML n) {
+
+        if (n == null) {
             throw new IllegalArgumentException("No se pudieron cargar los datos porque el nodo es null");
         }
-        if (n.getObj() instanceof Hospitales h)
-        {
+        if (n.getObj() instanceof Hospitales h) {
             jtfNombre.setText(h.getNombre());
             jtfClave.setText(h.getClaveH());
             jcbNivel.setSelectedIndex(h.getNivel());
-        } else
-        {
+        } else {
             throw new IllegalArgumentException("EL objeto es null o no es de tipo Hospitales");
         }
 
@@ -296,33 +290,29 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
 
      private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
      {//GEN-HEADEREND:event_btnGuardarActionPerformed
-         try
-         {
+         try {
 
              int nivel = jcbNivel.getSelectedIndex();
              String direccion = jtaDireccion.getText();
              String nombre = jtfNombre.getText().trim();
 
-             if (nombre.isEmpty() || nivel == 0 || direccion.isEmpty())
-             {
+             if (nombre.isEmpty() || nivel == 0 || direccion.isEmpty()) {
                  JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos",
                          "Error", JOptionPane.ERROR_MESSAGE);
                  return;
              }
              CreadorDeNodos n = new CreadorDeNodos();
              this.nodoHospital = n.NodoHospitales(direccion, nivel, nombre);
-             objetoEditable=new Hospitales(direccion, nivel, nombre,jtfClave.getText());
+             objetoEditable = new Hospitales(direccion, nivel, nombre, jtfClave.getText());
              dispose();
-         } catch (RuntimeException ex)
-         {
+         } catch (RuntimeException ex) {
              JOptionPane.showMessageDialog(this, "Error al registrar el hospital: " + ex.getMessage(),
                      "Error", JOptionPane.ERROR_MESSAGE);
          }
      }//GEN-LAST:event_btnGuardarActionPerformed
 
     @Override
-    public NodoML getNodoRegistrado()
-    {
+    public NodoML getNodoRegistrado() {
         return this.nodoHospital;
     }
 
@@ -330,7 +320,6 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
      private void CancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarActionPerformed
      {//GEN-HEADEREND:event_CancelarActionPerformed
          CtrlInterfaz.limpia(jtaDireccion);
-         CtrlInterfaz.limpia(jtfClave);
          CtrlInterfaz.limpia(jcbNivel);
      }//GEN-LAST:event_CancelarActionPerformed
 
@@ -357,43 +346,33 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 vtnHospitales vtn = new vtnHospitales(null, true);
             }
         });
@@ -419,8 +398,7 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public Object getObjetoEditado()
-    {
+    public Object getObjetoEditado() {
         return objetoEditable;
     }
 

@@ -4,84 +4,72 @@
  */
 package edd_hospital_.multi_lista;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Joabp
+ * @param <T>
  */
-public class NodoML<T>
-{
+public class NodoML<T> implements Serializable {
 
     private T obj;
     private String etiqueta;
     private NodoML siguiente, anterior, arriba, abajo;
 
-    public NodoML(T obj, String etiqueta)
-    {
+    public NodoML(T obj, String etiqueta) {
         this.obj = obj;
         this.etiqueta = etiqueta;
     }
 
-    public NodoML()
-    {
+    public NodoML() {
     }
 
-    public String getEt()
-    {
+    public String getEt() {
         return etiqueta;
     }
 
-    public void setEt(String etiqueta)
-    {
+    public void setEt(String etiqueta) {
         this.etiqueta = etiqueta;
     }
 
-    public T getObj()
-    {
+    public T getObj() {
         return obj;
     }
 
-    public void setObj(T obj)
-    {
+    public void setObj(T obj) {
         this.obj = obj;
     }
 
-    public NodoML getSig()
-    {
+    public NodoML getSig() {
         return siguiente;
     }
 
-    public void setSig(NodoML siguiente)
-    {
+    public void setSig(NodoML siguiente) {
         this.siguiente = siguiente;
     }
 
-    public NodoML getAnt()
-    {
+    public NodoML getAnt() {
         return anterior;
     }
 
-    public void setAnt(NodoML anterior)
-    {
+    public void setAnt(NodoML anterior) {
         this.anterior = anterior;
     }
 
-    public NodoML getArb()
-    {
+    public NodoML getArb() {
         return arriba;
     }
 
-    public void setArb(NodoML arriba)
-    {
+    public void setArb(NodoML arriba) {
         this.arriba = arriba;
     }
 
-    public NodoML getAbj()
-    {
+    public NodoML getAbj() {
         return abajo;
     }
 
-    public void setAbj(NodoML abajo)
-    {
+    public void setAbj(NodoML abajo) {
         this.abajo = abajo;
     }
 

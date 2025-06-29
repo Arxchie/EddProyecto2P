@@ -261,7 +261,7 @@ public class vtnDependencia extends javax.swing.JDialog implements VentanaRegist
 
      private void CancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarActionPerformed
      {//GEN-HEADEREND:event_CancelarActionPerformed
-         CtrlInterfaz.limpia(jtfClave);
+         
          CtrlInterfaz.limpia(jtfNombre);
          CtrlInterfaz.limpia(jcbTipo);
      }//GEN-LAST:event_CancelarActionPerformed

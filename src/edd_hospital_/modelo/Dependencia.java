@@ -10,47 +10,40 @@ package edd_hospital_.modelo;
  */
 public class Dependencia extends Datos
 {
-
     private String tipo;
     private String claveD;
-   
 
-    public Dependencia(String tipo, String nombre)
-    {
+    public Dependencia(String tipo, String nombre) {
         super(nombre);
         this.tipo = tipo;
         this.claveD = generarClave('D');
     }
-    public Dependencia(String tipo, String nombre,String clave)
-    {
+
+    public Dependencia(String tipo, String nombre, String clave) {
         super(nombre);
         this.tipo = tipo;
-        this.claveD=clave;
+        this.claveD = clave;
     }
 
     /**
      * @return the tipo
      */
-    public String getTipo()
-    {
+    public String getTipo() {
         return tipo;
     }
 
     /**
      * @param tipo the tipo to set
      */
-    public void setTipo(String tipo)
-    {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public String getClaveD()
-    {
+    public String getClaveD() {
         return claveD;
     }
 
-    public void setClaveD(String claveD)
-    {
+    public void setClaveD(String claveD) {
         this.claveD = claveD;
     }
 
