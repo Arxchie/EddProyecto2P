@@ -167,6 +167,7 @@ public class controladorCrud
                     actualizarVista();
                 } catch (RuntimeException ex)
                 {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
                 }
             } else
@@ -203,6 +204,7 @@ public class controladorCrud
 
                         } catch (RuntimeException ex)
                         {
+                            ex.printStackTrace();
                             JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
                         }
                     }

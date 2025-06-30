@@ -13,22 +13,24 @@ import edd_hospital_.multi_lista.NodoML;
 public class BicolaPacientes
 {
 
-    private static Bicola<NodoML> pacientesEnEspera = new Bicola(new Paciente[100]);
+    private static Bicola<NodoML> pacientesEnEspera = new Bicola(new NodoML[100]);
 
     public BicolaPacientes()
     {
-        this.pacientesEnEspera = new Bicola(new Paciente[100]);
+        this.pacientesEnEspera = new Bicola(new NodoML[100]);
     }
 
     public static void insertaPacienteOncologia(NodoML nodoPaciente)
     {
 
         pacientesEnEspera.setA1(pacientesEnEspera.inserta(nodoPaciente, pacientesEnEspera.getA1(), pacientesEnEspera.getA2(), 1));
+        System.out.println("Insertado en oncologia");
     }
 
     public static void insertaPacienteNeuro(NodoML nodoPaciente)
     {
         pacientesEnEspera.setA2(pacientesEnEspera.inserta(nodoPaciente, pacientesEnEspera.getA2(), pacientesEnEspera.getA1(), -1));
+        System.out.println("insertado en neuro");
     }
 
     public static NodoML eliminaNodoPacienteOncologia()
@@ -58,18 +60,18 @@ public class BicolaPacientes
     public static void main(String[] args)
     {
 //        BicolaPacientes bp = new BicolaPacientes();
-//        Paciente p1 = new Paciente("Vigente", "Neuro", 'M', "Jose");
-//        Paciente p2 = new Paciente("Vigente", "Onco", 'M', "Saul");
-//        Paciente p3 = new Paciente("Vigente", "Onco", 'M', "Ivan");
-//        Paciente p4 = new Paciente("Vigente", "Neuro", 'F', "Teresa");
+//        NodoML n1 = new NodoML("1", "1");
+//        NodoML n2 = new NodoML("1", "1");
+//        NodoML n3 = new NodoML("2", "2");
+//        NodoML n4 = new NodoML("2", "2");
 //
-//        bp.insertaPacienteNeuro(p1);
-//        bp.insertaPacienteNeuro(p4);
-//        bp.insertaPacienteOncologia(p2);
-//        bp.insertaPacienteOncologia(p3);
-//        bp.eliminaPacienteNeuro(p1);
+//        BicolaPacientes.insertaPacienteNeuro(n1);
+//        BicolaPacientes.insertaPacienteNeuro(n2);
+//        BicolaPacientes.insertaPacienteOncologia(n3);
+//        BicolaPacientes.insertaPacienteOncologia(n4);
 //
-//        bp.despDer();
+//        BicolaPacientes.despDer();
+//        BicolaPacientes.despIzq();
 
     }
 

@@ -77,11 +77,11 @@ public class CrudEspecialidad implements Crudable
         NodoML nodoAActualizar = multilista.buscarEnMultilista(ruta);
         if (nodoAActualizar == null)
         {
-            throw  new IllegalArgumentException("No se encontro el nodo a actualizar");
+            throw new IllegalArgumentException("No se encontro el nodo a actualizar");
         }
-        if (nuevo != null)
+        if (nuevo == null)
         {
-            throw  new IllegalArgumentException("El nuevo objeto no puede ser null");
+            throw new IllegalArgumentException("El nuevo objeto no puede ser null");
         }
         nodoAActualizar.setObj(nuevo);
 

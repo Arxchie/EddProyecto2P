@@ -7,6 +7,7 @@ import edd_hospital_.multi_lista.NodoML;
 import interfaces.VentanaRegistrable;
 import edd_hospital_.modelo.Datos;
 import edd_hospital_.modelo.CreadorDeNodos;
+import edd_hospital_.modelo.Dependencia;
 import interfaces.VentanaEditable;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
 {
 
     private NodoML nodoEspecialidad;
+    Especialidad objetoEditable;
 
     /**
      * Creates new form vtnEspecialidad
@@ -221,15 +223,12 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(EspecialidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(EspecialidadLayout.createSequentialGroup()
-                        .addGroup(EspecialidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfCamas, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfClave, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                            .addComponent(jtfNombre))
-                        .addGap(37, 37, 37))
-                    .addGroup(EspecialidadLayout.createSequentialGroup()
-                        .addComponent(jtfMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(EspecialidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jtfCamas, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfClave, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                        .addComponent(jtfNombre))
+                    .addComponent(jtfMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EspecialidadLayout.createSequentialGroup()
                 .addGap(96, 96, 96)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -314,6 +313,7 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
              }
 
              CreadorDeNodos n = new CreadorDeNodos();
+             objetoEditable = new Especialidad(camas, medicos, nombre);
              nodoEspecialidad = n.NodoEspecialidades(camas, medicos, nombre);
              dispose();
 
@@ -325,6 +325,7 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
              JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
          }
      }//GEN-LAST:event_btnGuardarActionPerformed
+    @Override
     public void cargarDatos(NodoML n)
     {
 
@@ -361,12 +362,6 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
          Validaciones.validaEntero(evt, 2, jtfMedicos.getText());
      }//GEN-LAST:event_jtfMedicosKeyTyped
 
-     private void CancelarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarBtnActionPerformed
-     {//GEN-HEADEREND:event_CancelarBtnActionPerformed
-         CtrlInterfaz.limpia(jtfCamas);
-         CtrlInterfaz.limpia(jtfMedicos);
-     }//GEN-LAST:event_CancelarBtnActionPerformed
-
      private void RegresarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RegresarBtnActionPerformed
      {//GEN-HEADEREND:event_RegresarBtnActionPerformed
 
@@ -400,6 +395,12 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
     {//GEN-HEADEREND:event_jtfCamasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCamasActionPerformed
+
+    private void CancelarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarBtnActionPerformed
+    {//GEN-HEADEREND:event_CancelarBtnActionPerformed
+        CtrlInterfaz.limpia(jtfCamas);
+        CtrlInterfaz.limpia(jtfMedicos);
+    }//GEN-LAST:event_CancelarBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -465,11 +466,9 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
     private javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
 
-
-
     @Override
     public Object getObjetoEditado()
     {
-        return nodoEspecialidad.getObj();
+        return objetoEditable;
     }
 }

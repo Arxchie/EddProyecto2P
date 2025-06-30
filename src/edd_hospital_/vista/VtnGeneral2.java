@@ -1,5 +1,6 @@
 package edd_hospital_.vista;
 
+import edd_hospital_.modelo.BicolaPacientes;
 import interfaces.MostrableEnTabla;
 import edd_hospital_.multi_lista.NodoML;
 import javax.swing.table.DefaultTableModel;
@@ -15,97 +16,98 @@ import javax.swing.SwingUtilities;
 public class VtnGeneral2 extends javax.swing.JFrame
 {
 
-     DefaultTableModel modeloTabla = new DefaultTableModel()
-     {
-          @Override
-          public boolean isCellEditable(int row, int column)
-          {
-               return false; // ninguna celda editable
-          }
-     };
+    DefaultTableModel modeloTabla = new DefaultTableModel()
+    {
+        @Override
+        public boolean isCellEditable(int row, int column)
+        {
+            return false; // ninguna celda editable
+        }
+    };
 
-     public VtnGeneral2()
-     {
+    public VtnGeneral2()
+    {
 
-          initComponents();
+        initComponents();
 
-     }
+    }
 
-     public void actualizarPanelNavegacion(List<String> ruta)
-     {
-          panelNavegacion.removeAll();
-          for (int i = 0; i < ruta.size(); i++)
-          {
-               String s = ruta.get(i);
-               JLabel ubicacion = new JLabel(s);
-               ubicacion.setFont(new Font("Arial", Font.PLAIN, 14));
-               panelNavegacion.add(ubicacion);
-               // Si no es el último elemento, agregar flecha
-               try
-               {
-                    if (i < ruta.size() - 1)
-                    {
-                         JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("/edd_hospital_/vista/imagenes/flecha.png")));
-                         panelNavegacion.add(flecha);
-                    }
-               } catch (Exception e)
-               {
-                    JLabel flecha = new JLabel(">");
+    public void actualizarPanelNavegacion(List<String> ruta)
+    {
+        panelNavegacion.removeAll();
+        for (int i = 0; i < ruta.size(); i++)
+        {
+            String s = ruta.get(i);
+            JLabel ubicacion = new JLabel(s);
+            ubicacion.setFont(new Font("Arial", Font.PLAIN, 14));
+            panelNavegacion.add(ubicacion);
+            // Si no es el último elemento, agregar flecha
+            try
+            {
+                if (i < ruta.size() - 1)
+                {
+                    JLabel flecha = new JLabel(new ImageIcon(getClass().getResource("/edd_hospital_/vista/imagenes/flecha.png")));
                     panelNavegacion.add(flecha);
-                    System.out.println(e.getMessage());
-               }
-          }
-          panelNavegacion.revalidate(); // Actualiza la interfaz
-          panelNavegacion.repaint();    // Repinta el panel para mostrar los cambios
-     }
+                }
+            } catch (Exception e)
+            {
+                JLabel flecha = new JLabel(">");
+                panelNavegacion.add(flecha);
+                System.out.println(e.getMessage());
+            }
+        }
+        panelNavegacion.revalidate(); // Actualiza la interfaz
+        panelNavegacion.repaint();    // Repinta el panel para mostrar los cambios
+    }
 
-     public void mostrarEnLaTabla(MostrableEnTabla modelProvider, NodoML raiz)
-     {
-          if (modelProvider == null)
-          {
-               return;
-          }
-          resetearModeloTabla();
-          for (String cabecera : modelProvider.getNombreCabeceras())
-          {
-               modeloTabla.addColumn(cabecera);
-          }
-          if (raiz != null)
-          {
-               for (Object fila[] : modelProvider.getDatos(raiz))
-               {
-                    modeloTabla.addRow(fila);
-               }
-          }
-          jtbTabla.setModel(modeloTabla);
-          jPanel1.revalidate();
-          jPanel1.repaint();
-     }
+    public void mostrarEnLaTabla(MostrableEnTabla modelProvider, NodoML raiz)
+    {
+        if (modelProvider == null)
+        {
+            return;
+        }
+        resetearModeloTabla();
+        for (String cabecera : modelProvider.getNombreCabeceras())
+        {
+            modeloTabla.addColumn(cabecera);
+        }
+        if (raiz != null)
+        {
+            for (Object fila[] : modelProvider.getDatos(raiz))
+            {
+                modeloTabla.addRow(fila);
+            }
+        }
+        jtbTabla.setModel(modeloTabla);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
 
-     public void resetearModeloTabla()
-     {
-          modeloTabla.setColumnCount(0);
-          modeloTabla.setRowCount(0);
-     }
+    public void resetearModeloTabla()
+    {
+        modeloTabla.setColumnCount(0);
+        modeloTabla.setRowCount(0);
+    }
 
-     public JButton getBtnVolver()
-     {
-          return btnVolver;
-     }
+    public JButton getBtnVolver()
+    {
+        return btnVolver;
+    }
 
-     public void setBtnVolver(JButton btnVolver)
-     {
-          this.btnVolver = btnVolver;
-     }
+    public void setBtnVolver(JButton btnVolver)
+    {
+        this.btnVolver = btnVolver;
+    }
 
-     /**
-      * This method is called from within the constructor to initialize the
-      * form. WARNING: Do NOT modify this code. The content of this method is
-      * always regenerated by the Form Editor.
-      */
-     @SuppressWarnings("unchecked")
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jpnLateral = new javax.swing.JPanel();
@@ -114,7 +116,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        cargar = new javax.swing.JButton();
         jpnSuperior = new javax.swing.JPanel();
         panelNavegacion = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
@@ -149,25 +151,31 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnNuevo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnNuevoActionPerformed(evt);
             }
         });
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnEliminar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnEliminarActionPerformed(evt);
             }
         });
 
         btnModificar.setText("Modificar");
 
-        jButton4.setText("Abir");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+        cargar.setText("Mostrar pacientes en espera");
+        cargar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                cargarActionPerformed(evt);
             }
         });
 
@@ -176,15 +184,15 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jpnBotonesLayout.setHorizontalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnBotonesLayout.createSequentialGroup()
-                .addContainerGap(379, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
+                .addComponent(cargar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
                 .addGap(52, 52, 52)
                 .addComponent(btnModificar)
                 .addGap(45, 45, 45)
                 .addComponent(btnEliminar)
-                .addGap(45, 45, 45)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(170, 170, 170))
         );
         jpnBotonesLayout.setVerticalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +202,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnModificar)
-                    .addComponent(jButton4))
+                    .addComponent(cargar))
                 .addGap(16, 16, 16))
         );
 
@@ -205,8 +213,10 @@ public class VtnGeneral2 extends javax.swing.JFrame
         panelNavegacion.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 15));
 
         btnVolver.setText("volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnVolver.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnVolverActionPerformed(evt);
             }
         });
@@ -245,10 +255,12 @@ public class VtnGeneral2 extends javax.swing.JFrame
 
         jtbTabla.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jtbTabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
 
             }
         ));
@@ -256,13 +268,17 @@ public class VtnGeneral2 extends javax.swing.JFrame
         jtbTabla.setRequestFocusEnabled(false);
         jtbTabla.setRowHeight(25);
         jtbTabla.setSelectionBackground(new java.awt.Color(153, 153, 255));
-        jtbTabla.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jtbTabla.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jtbTablaMouseClicked(evt);
             }
         });
-        jtbTabla.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        jtbTabla.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 jtbTablaKeyPressed(evt);
             }
         });
@@ -280,77 +296,79 @@ public class VtnGeneral2 extends javax.swing.JFrame
 
     private void jtbTablaKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtbTablaKeyPressed
     {//GEN-HEADEREND:event_jtbTablaKeyPressed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
 
     }//GEN-LAST:event_jtbTablaKeyPressed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevoActionPerformed
     {//GEN-HEADEREND:event_btnNuevoActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
 
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-     public JButton getBtnNuevo()
-     {
-          return btnNuevo;
-     }
+    public JButton getBtnNuevo()
+    {
+        return btnNuevo;
+    }
 
-     public void setBtnNuevo(JButton btnNuevo)
-     {
-          this.btnNuevo = btnNuevo;
-     }
+    public void setBtnNuevo(JButton btnNuevo)
+    {
+        this.btnNuevo = btnNuevo;
+    }
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton4ActionPerformed
-    {//GEN-HEADEREND:event_jButton4ActionPerformed
-         // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void cargarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cargarActionPerformed
+    {//GEN-HEADEREND:event_cargarActionPerformed
+        System.out.println("pacientes onco ");
+        BicolaPacientes.despIzq();
+        System.out.println("pacientes neuro");
+        BicolaPacientes.despDer();
+    }//GEN-LAST:event_cargarActionPerformed
 
     private void jtbTablaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtbTablaMouseClicked
     {//GEN-HEADEREND:event_jtbTablaMouseClicked
-         // TODO add your handling code here:
+        // TODO add your handling code here:
 
 
     }//GEN-LAST:event_jtbTablaMouseClicked
 
-     public JLabel getLblTitulo()
-     {
-          return lblTitulo;
-     }
+    public JLabel getLblTitulo()
+    {
+        return lblTitulo;
+    }
 
-     public void setLblTitulo(JLabel lblTitulo)
-     {
-          this.lblTitulo = lblTitulo;
-     }
+    public void setLblTitulo(JLabel lblTitulo)
+    {
+        this.lblTitulo = lblTitulo;
+    }
 
-     public JTable getJtbTabla()
-     {
-          return jtbTabla;
-     }
+    public JTable getJtbTabla()
+    {
+        return jtbTabla;
+    }
 
-     public void setJtbTabla(JTable jtbTabla)
-     {
-          this.jtbTabla = jtbTabla;
-     }
+    public void setJtbTabla(JTable jtbTabla)
+    {
+        this.jtbTabla = jtbTabla;
+    }
 
-     public boolean esDobleClickIzquierdo(MouseEvent evt)
-     {
-          return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
-     }
+    public boolean esDobleClickIzquierdo(MouseEvent evt)
+    {
+        return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
+    }
 
-     public String getNombreSeleccionado()
-     {
-          String claveSeleccionado = null;
-          int filaSeleccionada = jtbTabla.getSelectedRow();
-          int columna = 1;
-          if (filaSeleccionada != -1)
-          {
-               Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
-               claveSeleccionado = (String) valor;
-          }
-          return claveSeleccionado;
-     }
+    public String getNombreSeleccionado()
+    {
+        String claveSeleccionado = null;
+        int filaSeleccionada = jtbTabla.getSelectedRow();
+        int columna = 1;
+        if (filaSeleccionada != -1)
+        {
+            Object valor = jtbTabla.getValueAt(filaSeleccionada, columna);
+            claveSeleccionado = (String) valor;
+        }
+        return claveSeleccionado;
+    }
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnVolverActionPerformed
     {//GEN-HEADEREND:event_btnVolverActionPerformed
 
@@ -382,52 +400,52 @@ public class VtnGeneral2 extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-     /**
-      * @param args the command line arguments
-      */
-     public static void main(String args[])
-     {
-          /* Set the Nimbus look and feel */
-          //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-          /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[])
+    {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-           */
-          try
-          {
-               for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-               {
-                    if ("Nimbus".equals(info.getName()))
-                    {
-                         javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                         break;
+         */
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
 
-                    }
-               }
-          } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
-          {
-               java.util.logging.Logger.getLogger(VtnGeneral2.class
-                       .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
+        {
+            java.util.logging.Logger.getLogger(VtnGeneral2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-          }
-          //</editor-fold>
-          //</editor-fold>
+        }
+        //</editor-fold>
+        //</editor-fold>
 
-          //</editor-fold>
+        //</editor-fold>
 
-          /* Create and display the form */
-          java.awt.EventQueue.invokeLater(() ->
-          {
-               new VtnGeneral2().setVisible(true);
-          });
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() ->
+        {
+            new VtnGeneral2().setVisible(true);
+        });
 
-     }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton cargar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
