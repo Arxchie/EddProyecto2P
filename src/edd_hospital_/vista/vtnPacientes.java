@@ -9,6 +9,7 @@ import edd_hospital_.modelo.CreadorDeNodos;
 import interfaces.VentanaEditable;
 import interfaces.VentanaRegistrable;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistrable, VentanaEditable
 {
@@ -28,11 +29,13 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         jtfClave.setText(String.format("P%03d", Datos.getNumeroDeRegistros() + 1));
 
     }
+
     public void configurarParaEditable()
     {
         jtfNombre.setEditable(false);
         jtfNombre.setFocusable(false);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,11 +43,11 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         Fondo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        RegresarBtn = new javax.swing.JButton();
         Paciente = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -67,34 +70,15 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
 
         jPanel1.setBackground(new java.awt.Color(102, 204, 255));
 
-        RegresarBtn.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        RegresarBtn.setText("Regresar");
-        RegresarBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        RegresarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegresarBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 152, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(15, 15, 15)
-                    .addComponent(RegresarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(15, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 450, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(204, 204, 204)
-                    .addComponent(RegresarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(205, Short.MAX_VALUE)))
         );
 
         Fondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 450));
@@ -115,21 +99,27 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
 
         jtfVigencia.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfVigencia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jtfVigencia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+        jtfVigencia.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
                 jtfVigenciaKeyTyped(evt);
             }
         });
 
         jtfNombre.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jtfNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jtfNombre.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jtfNombreActionPerformed(evt);
             }
         });
-        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
                 jtfNombreKeyTyped(evt);
             }
         });
@@ -138,8 +128,10 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         btnGuardar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnGuardar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnGuardarActionPerformed(evt);
             }
         });
@@ -151,13 +143,17 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         jtfClave.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         jtfClave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jtfClave.setFocusable(false);
-        jtfClave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jtfClave.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jtfClaveActionPerformed(evt);
             }
         });
-        jtfClave.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+        jtfClave.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
                 jtfClaveKeyTyped(evt);
             }
         });
@@ -166,8 +162,10 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         Cancelar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         Cancelar.setText("Cancelar");
         Cancelar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        Cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Cancelar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 CancelarActionPerformed(evt);
             }
         });
@@ -269,9 +267,43 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
 
      private void jtfVigenciaKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfVigenciaKeyTyped
      {//GEN-HEADEREND:event_jtfVigenciaKeyTyped
+         Validaciones.validaEntero(evt, 10, jtfVigencia.getText());
+         char c = evt.getKeyChar();
+         if (!(Character.isDigit(c) || c == evt.VK_BACK_SPACE || c == evt.VK_DELETE))
+         {
+             evt.consume();
+             return;
+         }
 
+         // Luego formatear con diagonales
+         ponerDiagonal(jtfVigencia);
      }//GEN-LAST:event_jtfVigenciaKeyTyped
+    private static void ponerDiagonal(JTextField textField)
+    {
+        String text = textField.getText().replaceAll("/", ""); // Eliminar diagonales existentes
+        StringBuilder formatted = new StringBuilder();
 
+        // Insertar diagonales en las posiciones correctas
+        for (int i = 0; i < text.length(); i++)
+        {
+            if (i == 2 || i == 4)
+            { // Posiciones donde van las diagonales (después de día y mes)
+                formatted.append("/");
+            }
+            formatted.append(text.charAt(i));
+
+            // Limitar a 8 caracteres (dd/mm/aa) o 10 (dd/mm/aaaa)
+            if (formatted.length() == 10)
+            {
+                break;
+            }
+        }
+
+        textField.setText(formatted.toString());
+
+        // Mover el cursor al final
+        textField.setCaretPosition(formatted.length());
+    }
      private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfNombreKeyTyped
      {//GEN-HEADEREND:event_jtfNombreKeyTyped
          Validaciones.validaAlfabeticos(evt, 35, jtfNombre.getText());
@@ -328,11 +360,6 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
          CtrlInterfaz.limpia(jtfVigencia);
      }//GEN-LAST:event_CancelarActionPerformed
 
-     private void RegresarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RegresarBtnActionPerformed
-     {//GEN-HEADEREND:event_RegresarBtnActionPerformed
-         dispose();
-     }//GEN-LAST:event_RegresarBtnActionPerformed
-
     private void jtfClaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jtfClaveActionPerformed
     {//GEN-HEADEREND:event_jtfClaveActionPerformed
         // TODO add your handling code here:
@@ -384,6 +411,7 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
             public void run()
             {
                 vtnPacientes vtn = new vtnPacientes(null, true);
+
             }
         });
     }
@@ -392,7 +420,6 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
     private javax.swing.JButton Cancelar;
     private javax.swing.JPanel Fondo;
     private javax.swing.JPanel Paciente;
-    private javax.swing.JButton RegresarBtn;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -413,8 +440,6 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
     {
         return nodoPaciente;
     }
-
-
 
     @Override
     public Object getObjetoEditado()
@@ -439,7 +464,7 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
             String sexoString = sexo == 'M' ? "Masculino" : "Femenino";
             jcbSexo.setSelectedItem(sexoString);
             jtfVigencia.setText(p.getVigencia());
-            
+
         } else
         {
             throw new IllegalArgumentException("EL objeto es null o no es de tipo dependencia");

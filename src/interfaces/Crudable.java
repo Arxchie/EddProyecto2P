@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import edd_hospital_.modelo.Datos;
+import edd_hospital_.modelo.Navegador;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 
@@ -15,35 +15,24 @@ import edd_hospital_.multi_lista.NodoML;
 public interface Crudable
 {
 
-    public abstract void insertar(MultiListaDL multilista,NodoML nodoAInsertar, String...ruta);
+    public abstract void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta);
 
-    public abstract NodoML eliminar(MultiListaDL multilista,String... ruta);
+    public abstract NodoML eliminar(MultiListaDL multilista, String... ruta);
 
-    public abstract NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista,String... ruta);
+    public abstract NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String... ruta);
 
-    public abstract void actualizarNodo(MultiListaDL multilista, Object nuevo,String ...ruta);
+    public abstract void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta);
 
-    public static NodoML buscarPorNombreEnNivelActual(NodoML nivelActual, String nombre)
+    public static boolean existeEseNombreEnRuta(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta)
     {
-        if (nivelActual == null || nombre == null || nombre.isEmpty())
+        if (multilista == null || nodoAInsertar == null || ruta == null)
         {
-            return null;
-        }
+            throw new IllegalArgumentException("No pueden ser nulos");
 
-        NodoML aux = nivelActual;
-        while (aux != null)
-        {
-            Object objeto = aux.getObj();
-            if (objeto instanceof Datos o)
-            {
-                if (nombre.equals(o.getNombre()))
-                {
-                    return aux;
-                }
-            }
-            aux = aux.getSig();
         }
-        return null;
+        String rutaCompleta[] = Navegador.crearRutaCompleta(ruta, nodoAInsertar.getEt());
+        NodoML nodoExistente = multilista.buscarEnMultilista(rutaCompleta);
+        return nodoExistente != null;
     }
 
 }

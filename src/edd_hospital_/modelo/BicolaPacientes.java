@@ -35,14 +35,14 @@ public class BicolaPacientes
 
     public static NodoML eliminaNodoPacienteOncologia()
     {
-        Object[] datos = pacientesEnEspera.elimina(pacientesEnEspera.getA1(), pacientesEnEspera.getA2(), 1);
+        Object[] datos = pacientesEnEspera.elimina(pacientesEnEspera.getA1(), - 1, 1);
         pacientesEnEspera.setA1((int) datos[1]);
         return (NodoML) datos[0];
     }
 
     public static NodoML eliminaNodoPacienteNeuro()
     {
-        Object[] datos = pacientesEnEspera.elimina(pacientesEnEspera.getA2(), pacientesEnEspera.getA1(), 1);
+        Object[] datos = pacientesEnEspera.elimina(pacientesEnEspera.getA2(), pacientesEnEspera.getArr().length, -1);
         pacientesEnEspera.setA2((int) datos[1]);
         return (NodoML) datos[0];
     }
@@ -70,8 +70,13 @@ public class BicolaPacientes
 //        BicolaPacientes.insertaPacienteOncologia(n3);
 //        BicolaPacientes.insertaPacienteOncologia(n4);
 //
+//        System.out.println("pacientes neuro");
 //        BicolaPacientes.despDer();
+//        System.out.println("pacientes onco");
 //        BicolaPacientes.despIzq();
+//
+//        System.out.println(BicolaPacientes.eliminaNodoPacienteNeuro().getEt());
+//        System.out.println(BicolaPacientes.eliminaNodoPacienteOncologia().getEt());
 
     }
 

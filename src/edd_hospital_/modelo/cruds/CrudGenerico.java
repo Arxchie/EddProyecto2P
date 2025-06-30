@@ -18,7 +18,13 @@ public class CrudGenerico implements Crudable
     @Override
     public void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta)
     {
+        if (Crudable.existeEseNombreEnRuta(multilista, nodoAInsertar, ruta))
+        {
+
+            throw new IllegalArgumentException("ya existe un elemento con ese nombre ");
+        }
         multilista.inserta(nodoAInsertar, ruta);
+
     }
 
     @Override
@@ -41,6 +47,7 @@ public class CrudGenerico implements Crudable
         {
             nodoAActualizar.setObj(nuevo);
         }
+
     }
 
 }

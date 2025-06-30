@@ -9,6 +9,7 @@ import edd_hospital_.modelo.LogicaNegocioJose;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.Crudable;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,25 +17,30 @@ import interfaces.Crudable;
  */
 public class CrudHospital implements Crudable
 {
-    
+
     @Override
     public void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta)
     {
+        if (Crudable.existeEseNombreEnRuta(multilista, nodoAInsertar, ruta))
+        {
+
+            throw new IllegalArgumentException("ya existe un hospital con ese nombre ");
+        }
         multilista.inserta(nodoAInsertar, ruta);
     }
-    
+
     @Override
     public NodoML eliminar(MultiListaDL multilista, String... ruta)
     {
         return multilista.elimina(ruta);
     }
-    
+
     @Override
     public NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String... ruta)
     {
         return multilista.buscarEnMultilista(ruta);
     }
-    
+
     @Override
     public void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta)
     {
@@ -55,19 +61,19 @@ public class CrudHospital implements Crudable
             {
                 if (!LogicaNegocioJose.tieneOncoYNeuro(nodoAActualizar))
                 {
-                    System.out.println("subir a nivel 3");
                     LogicaNegocioJose.subirNodoANivel3(nodoAActualizar);
+                    JOptionPane.showMessageDialog(null, "Se subio a nivel tres el hospital: " + nodoAActualizar.getEt());
                 }
             } else
             {
                 if (LogicaNegocioJose.tieneOncoYNeuro(nodoAActualizar))
                 {
-                    System.out.println("bajar de nivel 3");
                     LogicaNegocioJose.bajarHospitalNivel3(nodoAActualizar);
-                    
+                    JOptionPane.showMessageDialog(null, "Se bajo de nivel tres el hospital: \n" + nodoAActualizar.getEt());
+
                 }
             }
         }
     }
-    
+
 }

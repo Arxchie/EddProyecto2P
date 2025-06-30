@@ -12,7 +12,8 @@ import java.awt.HeadlessException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistrable, VentanaEditable {
+public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistrable, VentanaEditable
+{
 
     private NodoML nodoHospital;
     Hospitales objetoEditable;
@@ -23,30 +24,37 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
      * @param parent
      * @param modal
      */
-    public vtnHospitales(java.awt.Frame parent, boolean modal) {
+    public vtnHospitales(java.awt.Frame parent, boolean modal)
+    {
         super(parent, modal);
         initComponents();
         jtfClave.setText(String.format("H%03d", Datos.getNumeroDeRegistros() + 1));
 
     }
 
-    public void configurarParaEditable() {
+    public void configurarParaEditable()
+    {
         jtfNombre.setEditable(false);
         jtfNombre.setFocusable(false);
 
     }
 
     @Override
-    public void cargarDatos(NodoML n) {
+    public void cargarDatos(NodoML n)
+    {
 
-        if (n == null) {
+        if (n == null)
+        {
             throw new IllegalArgumentException("No se pudieron cargar los datos porque el nodo es null");
         }
-        if (n.getObj() instanceof Hospitales h) {
+        if (n.getObj() instanceof Hospitales h)
+        {
+            jtaDireccion.setText(h.getDireccion());
             jtfNombre.setText(h.getNombre());
             jtfClave.setText(h.getClaveH());
             jcbNivel.setSelectedIndex(h.getNivel());
-        } else {
+        } else
+        {
             throw new IllegalArgumentException("EL objeto es null o no es de tipo Hospitales");
         }
 
@@ -64,7 +72,6 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
 
         Fondo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        RegresarBtn = new javax.swing.JButton();
         Hospital = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -86,36 +93,15 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
 
         jPanel1.setBackground(new java.awt.Color(102, 204, 255));
 
-        RegresarBtn.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        RegresarBtn.setText("Regresar");
-        RegresarBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        RegresarBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                RegresarBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 152, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(15, 15, 15)
-                    .addComponent(RegresarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(15, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 490, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(204, 204, 204)
-                    .addComponent(RegresarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(245, Short.MAX_VALUE)))
         );
 
         Fondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 490));
@@ -182,6 +168,13 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
         jtaDireccion.setLineWrap(true);
         jtaDireccion.setRows(5);
         jtaDireccion.setWrapStyleWord(true);
+        jtaDireccion.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                jtaDireccionKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtaDireccion);
 
         jtfNombre.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
@@ -274,9 +267,7 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+            .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -290,13 +281,15 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
 
      private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
      {//GEN-HEADEREND:event_btnGuardarActionPerformed
-         try {
+         try
+         {
 
              int nivel = jcbNivel.getSelectedIndex();
              String direccion = jtaDireccion.getText();
              String nombre = jtfNombre.getText().trim();
 
-             if (nombre.isEmpty() || nivel == 0 || direccion.isEmpty()) {
+             if (nombre.isEmpty() || nivel == 0 || direccion.isEmpty())
+             {
                  JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos",
                          "Error", JOptionPane.ERROR_MESSAGE);
                  return;
@@ -305,14 +298,16 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
              this.nodoHospital = n.NodoHospitales(direccion, nivel, nombre);
              objetoEditable = new Hospitales(direccion, nivel, nombre, jtfClave.getText());
              dispose();
-         } catch (RuntimeException ex) {
+         } catch (RuntimeException ex)
+         {
              JOptionPane.showMessageDialog(this, "Error al registrar el hospital: " + ex.getMessage(),
                      "Error", JOptionPane.ERROR_MESSAGE);
          }
      }//GEN-LAST:event_btnGuardarActionPerformed
 
     @Override
-    public NodoML getNodoRegistrado() {
+    public NodoML getNodoRegistrado()
+    {
         return this.nodoHospital;
     }
 
@@ -322,11 +317,6 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
          CtrlInterfaz.limpia(jtaDireccion);
          CtrlInterfaz.limpia(jcbNivel);
      }//GEN-LAST:event_CancelarActionPerformed
-
-     private void RegresarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RegresarBtnActionPerformed
-     {//GEN-HEADEREND:event_RegresarBtnActionPerformed
-
-     }//GEN-LAST:event_RegresarBtnActionPerformed
 
     private void jcbNivelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jcbNivelActionPerformed
     {//GEN-HEADEREND:event_jcbNivelActionPerformed
@@ -340,39 +330,54 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
 
     private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfNombreKeyTyped
     {//GEN-HEADEREND:event_jtfNombreKeyTyped
-        Validaciones.validaAlfabeticos(evt, 35, jtfNombre.getText());
+        Validaciones.validaAlfabeticos(evt, 40, jtfNombre.getText());
     }//GEN-LAST:event_jtfNombreKeyTyped
+
+    private void jtaDireccionKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtaDireccionKeyTyped
+    {//GEN-HEADEREND:event_jtaDireccionKeyTyped
+        Validaciones.validaAlfabeticos(evt, 35, jtaDireccion.getText());
+    }//GEN-LAST:event_jtaDireccionKeyTyped
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(vtnHospitales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 vtnHospitales vtn = new vtnHospitales(null, true);
             }
         });
@@ -382,7 +387,6 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
     private javax.swing.JButton Cancelar;
     private javax.swing.JPanel Fondo;
     private javax.swing.JPanel Hospital;
-    private javax.swing.JButton RegresarBtn;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel6;
@@ -398,7 +402,8 @@ public class vtnHospitales extends javax.swing.JDialog implements VentanaRegistr
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public Object getObjetoEditado() {
+    public Object getObjetoEditado()
+    {
         return objetoEditable;
     }
 

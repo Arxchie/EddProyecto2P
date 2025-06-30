@@ -77,8 +77,7 @@ public class Bicola<T>
         if (a == lim)
         {
             System.out.println("bicola vacia");
-            throw new IllegalStateException("bicola vacia");
-
+            de[1] = a;
         } else
         {
             de[0] = arr[lim + f];

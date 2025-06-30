@@ -13,42 +13,58 @@ import interfaces.Crudable;
  *
  * @author HP
  */
-public class CrudPaciente implements Crudable {
+public class CrudPaciente implements Crudable
+{
 
     @Override
-    public void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta) {
+    public void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta)
+    {
         validar(nodoAInsertar, multilista, ruta);
         multilista.inserta(nodoAInsertar, ruta);
     }
 
     @Override
-    public NodoML eliminar(MultiListaDL multilista, String... ruta) {
+    public NodoML eliminar(MultiListaDL multilista, String... ruta)
+    {
         return multilista.elimina(ruta);
     }
 
     @Override
-    public NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String... ruta) {
+    public NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String... ruta)
+    {
         return multilista.buscarEnMultilista(ruta);
     }
 
     @Override
-    public void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta) {
+    public void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta)
+    {
         NodoML nodoAActualizar = multilista.buscarEnMultilista(ruta);
-        if (nodoAActualizar != null) {
+        if (nodoAActualizar != null)
+        {
             nodoAActualizar.setObj(nuevo);
         }
     }
 
-    public void validar(NodoML paciente, MultiListaDL multilista, String ruta[]) {
+    public void validar(NodoML paciente, MultiListaDL multilista, String ruta[])
+    {
         NodoML especialidadPadre = multilista.buscarEnMultilista(ruta);
-        if (especialidadPadre == null) {
+        if (especialidadPadre == null)
+        {
             throw new IllegalStateException("No hay especialidad padre");
         }
-        if (especialidadPadre.getObj() instanceof Especialidad e) {
-            if (e.getNumeroDeCamas() == e.getNumeroDePacientes(especialidadPadre) && e.getNumeroDePacientes(especialidadPadre) != 0) {
+        if (especialidadPadre.getObj() instanceof Especialidad e)
+        {
+            if (e.getNumeroDeCamas() == e.getNumeroDePacientes(especialidadPadre) && e.getNumeroDePacientes(especialidadPadre) != 0)
+            {
                 throw new IllegalStateException("No hay camas disponibles");
 
             }
+
+        }
+        if (Crudable.existeEseNombreEnRuta(multilista, paciente, ruta))
+        {
+
+            throw new IllegalArgumentException("ya existe un paciente con ese nombre ");
         }
     }
 

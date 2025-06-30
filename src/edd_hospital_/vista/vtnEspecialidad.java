@@ -381,7 +381,6 @@ public class vtnEspecialidad extends javax.swing.JDialog implements VentanaRegis
 
     private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfNombreKeyTyped
     {//GEN-HEADEREND:event_jtfNombreKeyTyped
-        // TODO add your handling code here:
 
         Validaciones.validaAlfabeticos(evt, 35, jtfNombre.getText());
     }//GEN-LAST:event_jtfNombreKeyTyped

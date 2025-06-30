@@ -18,6 +18,7 @@ import interfaces.Crudable;
 import interfaces.VentanaEditable;
 import java.awt.event.ActionEvent;
 import edd_hospital_.modelo.Datos;
+import edd_hospital_.modelo.LogicaNegocioJose;
 import poo.ManipulacionArchivos;
 
 /**
@@ -93,6 +94,7 @@ public class controladorCrud
         }
         ventanaGeneral.actualizarPanelNavegacion(navegador.getRuta());
         actualizarTituloNivel();
+        ventanaGeneral.mostrarBotonAltaPaciente(navegador.getTipoNivelActual());
     }
 
     private void actualizarTituloNivel()
@@ -167,7 +169,6 @@ public class controladorCrud
                     actualizarVista();
                 } catch (RuntimeException ex)
                 {
-                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
                 }
             } else
@@ -204,7 +205,6 @@ public class controladorCrud
 
                         } catch (RuntimeException ex)
                         {
-                            ex.printStackTrace();
                             JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
                         }
                     }
@@ -237,15 +237,54 @@ public class controladorCrud
 
                 if (opcion == JOptionPane.YES_OPTION)
                 {
-                    Crudable crud = CrudFactory.crearCrud(navegador.getTipoNivelActual());
-                    crud.eliminar(multilista, navegador.crearRutaCompleta(navegador.getRutaArray(), cveSeleccionado));
-                    ManipulacionArchivos.guarda(ventanaGeneral, Datos.getNumeroDeRegistros(), archivoRegistros);
-                    ManipulacionArchivos.guarda(ventanaGeneral, multilista, archivos);
-                    actualizarVista();
+                    try
+                    {
+                        Crudable crud = CrudFactory.crearCrud(navegador.getTipoNivelActual());
+                        crud.eliminar(multilista, Navegador.crearRutaCompleta(navegador.getRutaArray(), cveSeleccionado));
+                        ManipulacionArchivos.guarda(ventanaGeneral, Datos.getNumeroDeRegistros(), archivoRegistros);
+                        ManipulacionArchivos.guarda(ventanaGeneral, multilista, archivos);
+                        actualizarVista();
+
+                    } catch (RuntimeException ex)
+                    {
+                        JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                    }
                 }
             } else
             {
                 JOptionPane.showMessageDialog(ventanaGeneral, "No hay un elemento seleccionado para eliminar.");
+            }
+        });
+
+        ventanaGeneral.getBtnAltaPaciente().addActionListener((e) ->
+        {
+            String nombreSeleccionado = ventanaGeneral.getNombreSeleccionado();
+            if (nombreSeleccionado != null)
+            {
+                int opcion = JOptionPane.showConfirmDialog(
+                        ventanaGeneral,
+                        "¿Estas seguro de que quieres darlo de alta?",
+                        "Confirmar alta",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION)
+                {
+                    try
+                    {
+                        LogicaNegocioJose.darAltaPaciente(multilista, navegador.getRutaArray(), nombreSeleccionado);
+                        ManipulacionArchivos.guarda(ventanaGeneral, Datos.getNumeroDeRegistros(), archivoRegistros);
+                        ManipulacionArchivos.guarda(ventanaGeneral, multilista, archivos);
+                        actualizarVista();
+
+                    } catch (RuntimeException ex)
+                    {
+                        JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                    }
+                }
+            } else
+            {
+                JOptionPane.showMessageDialog(ventanaGeneral, " No hay un elemento seleccionado para eliminar. ");
             }
         });
 

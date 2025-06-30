@@ -1,6 +1,7 @@
 package edd_hospital_.vista;
 
 import edd_hospital_.modelo.BicolaPacientes;
+import edd_hospital_.modelo.Niveles;
 import interfaces.MostrableEnTabla;
 import edd_hospital_.multi_lista.NodoML;
 import javax.swing.table.DefaultTableModel;
@@ -117,6 +118,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         cargar = new javax.swing.JButton();
+        btnAltaPaciente = new javax.swing.JButton();
         jpnSuperior = new javax.swing.JPanel();
         panelNavegacion = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
@@ -179,20 +181,31 @@ public class VtnGeneral2 extends javax.swing.JFrame
             }
         });
 
+        btnAltaPaciente.setText("Dar de alta paciente");
+        btnAltaPaciente.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAltaPacienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpnBotonesLayout = new javax.swing.GroupLayout(jpnBotones);
         jpnBotones.setLayout(jpnBotonesLayout);
         jpnBotonesLayout.setHorizontalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnBotonesLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(16, 16, 16)
                 .addComponent(cargar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(btnAltaPaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
-                .addGap(52, 52, 52)
+                .addGap(34, 34, 34)
                 .addComponent(btnModificar)
-                .addGap(45, 45, 45)
+                .addGap(56, 56, 56)
                 .addComponent(btnEliminar)
-                .addGap(170, 170, 170))
+                .addGap(20, 20, 20))
         );
         jpnBotonesLayout.setVerticalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +215,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnModificar)
-                    .addComponent(cargar))
+                    .addComponent(cargar)
+                    .addComponent(btnAltaPaciente))
                 .addGap(16, 16, 16))
         );
 
@@ -400,6 +414,32 @@ public class VtnGeneral2 extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnAltaPacienteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAltaPacienteActionPerformed
+    {//GEN-HEADEREND:event_btnAltaPacienteActionPerformed
+
+    }//GEN-LAST:event_btnAltaPacienteActionPerformed
+
+    public JButton getBtnAltaPaciente()
+    {
+        return btnAltaPaciente;
+    }
+
+    public void setBtnAltaPaciente(JButton btnAltaPaciente)
+    {
+        this.btnAltaPaciente = btnAltaPaciente;
+    }
+
+    public void mostrarBotonAltaPaciente(Niveles nivelActual)
+    {
+        if (nivelActual == Niveles.PACIENTE)
+        {
+            btnAltaPaciente.setVisible(true);
+        } else
+        {
+            btnAltaPaciente.setVisible(false);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -441,6 +481,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAltaPaciente;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;

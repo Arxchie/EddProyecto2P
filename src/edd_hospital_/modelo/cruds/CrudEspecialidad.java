@@ -7,6 +7,8 @@ package edd_hospital_.modelo.cruds;
 import edd_hospital_.modelo.Especialidad;
 import edd_hospital_.modelo.Hospitales;
 import edd_hospital_.modelo.CreadorDeNodos;
+import edd_hospital_.modelo.EspecialidadesNivel3;
+import edd_hospital_.modelo.LogicaNegocioJose;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.Crudable;
@@ -50,11 +52,16 @@ public class CrudEspecialidad implements Crudable
         if (objetoPadre instanceof Hospitales h && objetoHijo instanceof Especialidad e)
         {
             String nombreEspecialidad = e.getNombre().toLowerCase().trim();
-            Set<String> especialidadesNoPermitidas = Set.of("neurocirugia", "neurocirugía", "oncologia", "oncología");
 
-            if (h.getNivel() < 3 && especialidadesNoPermitidas.contains(nombreEspecialidad))
+            if (h.getNivel() < 3 && EspecialidadesNivel3.oncologia.contains(nombreEspecialidad) 
+                    || EspecialidadesNivel3.neurologia.contains(nombreEspecialidad))
             {
                 throw new IllegalArgumentException("Un hospital menor a nivel 3 no puede tener esa especialidad.");
+            }
+            if (Crudable.existeEseNombreEnRuta(multilista, nodoAInsertar, ruta))
+            {
+
+                throw new IllegalArgumentException("ya existe una especialidad con ese nombre ");
             }
         }
     }
@@ -62,6 +69,24 @@ public class CrudEspecialidad implements Crudable
     @Override
     public NodoML eliminar(MultiListaDL multilista, String[] ruta)
     {
+        NodoML nodoEspecialidad = multilista.buscarEnMultilista(ruta);
+        if (nodoEspecialidad == null)
+        {
+            throw new IllegalStateException("No se encontro el nodo a eliminar ");
+        }
+        NodoML nodoPadre = nodoEspecialidad.getArb();
+        if (nodoPadre == null)
+        {
+            throw new IllegalStateException("La especialidad deberia tener un hospital padre  ");
+        }
+        if (nodoPadre.getObj() instanceof Hospitales hospitalPadre)
+        {
+            if (hospitalPadre.getNivel() == 3 && EspecialidadesNivel3.oncologia.contains(nodoEspecialidad.getEt().toLowerCase().trim())
+                    || EspecialidadesNivel3.neurologia.contains(nodoEspecialidad.getEt().toLowerCase().trim()))
+            {
+                throw new IllegalArgumentException("No puedes borrar esta especialidad");
+            }
+        }
         return multilista.elimina(ruta);
     }
 
@@ -69,6 +94,7 @@ public class CrudEspecialidad implements Crudable
     public NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String[] ruta)
     {
         return multilista.buscarEnMultilista(ruta);
+
     }
 
     @Override
@@ -82,6 +108,16 @@ public class CrudEspecialidad implements Crudable
         if (nuevo == null)
         {
             throw new IllegalArgumentException("El nuevo objeto no puede ser null");
+        }
+        if (nuevo instanceof Especialidad e)
+        {
+            if (e.getNumeroDeCamas() < Especialidad.getNumeroDePacientes(nodoAActualizar))
+            {
+                throw new IllegalStateException("El numero de camas no puede ser menos a los pacientes ");
+            }
+        } else
+        {
+            throw new IllegalStateException("No tiene objeto de especialidad");
         }
         nodoAActualizar.setObj(nuevo);
 
