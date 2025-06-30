@@ -10,7 +10,6 @@ package edd_hospital_.modelo;
  */
 public class Hospitales extends Datos {
 
-
     private String direccion;
     private int nivel;
     private String claveH;
@@ -69,6 +68,10 @@ public class Hospitales extends Datos {
      */
     public void setClaveH(String claveH) {
         this.claveH = claveH;
+    }
+
+    public boolean isNivelTres() {
+        return nivel == 3;
     }
 
 }

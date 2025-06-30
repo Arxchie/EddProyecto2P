@@ -10,25 +10,30 @@ import java.io.Serializable;
  *
  * @author Jou
  */
-public class MultiListaDL<T> implements Serializable {
+public class MultiListaDL<T> implements Serializable
+{
 
     // Asegúrate de que todos los atributos internos también sean serializables
     private NodoML r = null;
     private boolean b = false;
 
-    public NodoML getR() {
+    public NodoML getR()
+    {
         return r;
     }
 
-    public void setR(NodoML r) {
+    public void setR(NodoML r)
+    {
         this.r = r;
     }
 
-    public boolean isB() {
+    public boolean isB()
+    {
         return b;
     }
 
-    public void setB(boolean b) {
+    public void setB(boolean b)
+    {
         this.b = b;
     }
 
@@ -41,25 +46,31 @@ public class MultiListaDL<T> implements Serializable {
      * longitud 0 ejemplo de ruta: "A","B","C" quiere decir, entra a "A", entra
      * a "B", entra a "C" y ahi inserta
      */
-    public void inserta(NodoML obj, String... ruta) {
+    public void inserta(NodoML obj, String... ruta)
+    {
         String[] nuevaRuta = new String[ruta.length + 1];
         System.arraycopy(ruta, 0, nuevaRuta, 0, ruta.length); // Copiar todo igual
         nuevaRuta[nuevaRuta.length - 1] = ""; // Agregar "" al final
         this.r = inserta(obj, this.r, nuevaRuta, 0);
     }
 
-    private NodoML inserta(NodoML obj, NodoML r, String[] s, int nivel) {
-        if (nivel == s.length - 1) {
+    private NodoML inserta(NodoML obj, NodoML r, String[] s, int nivel)
+    {
+        if (nivel == s.length - 1)
+        {
             ListaDLML l = new ListaDLML();
             l.setR(r);
             l.inserta(obj);
             b = true;
             return l.getR();
-        } else {
+        } else
+        {
             NodoML aux = buscaEnLista(r, s[nivel]);
-            if (aux != null) {
+            if (aux != null)
+            {
                 aux.setAbj(inserta(obj, aux.getAbj(), s, nivel + 1));
-                if (b) {
+                if (b)
+                {
                     obj.setArb(aux);
                     b = false;
                 }
@@ -77,11 +88,15 @@ public class MultiListaDL<T> implements Serializable {
      * @return el nodo con la etiqueta especificada, si es que existe, null si
      * no existe
      */
-    public NodoML buscaEnLista(NodoML aux, String s) {
-        while (aux != null) {
-            if (aux.getEt().equals(s)) {
+    public NodoML buscaEnLista(NodoML aux, String s)
+    {
+        while (aux != null)
+        {
+            if (aux.getEt().equals(s))
+            {
                 return aux;
-            } else {
+            } else
+            {
                 aux = aux.getSig();
             }
         }
@@ -121,31 +136,40 @@ public class MultiListaDL<T> implements Serializable {
      * @return el ultimo nodo el la ruta especificada, si no se encuentra algun
      * elemento de la ruta devuelve null
      */
-    public NodoML buscarEnMultilista(String... ruta) {
+    public NodoML buscarEnMultilista(String... ruta)
+    {
         NodoML actual = this.r;
-        for (int nivel = 0; nivel < ruta.length; nivel++) {
-            if (actual == null) {
+        for (int nivel = 0; nivel < ruta.length; nivel++)
+        {
+            if (actual == null)
+            {
                 return null;
             }
             actual = buscaEnLista(actual, ruta[nivel]);
-            if (nivel < ruta.length - 1 && actual != null) {
+            if (nivel < ruta.length - 1 && actual != null)
+            {
                 actual = actual.getAbj();
             }
         }
         return actual;
     }
 
-    public String desp() {
+    public String desp()
+    {
         return desp(this.r, "");
     }
 
-    private String desp(NodoML r, String t) {
+    private String desp(NodoML r, String t)
+    {
 
         String s = "";
-        while (r != null) {
-            if (r.getArb() != null) {
+        while (r != null)
+        {
+            if (r.getArb() != null)
+            {
                 s += t + r.getEt() + "->" + r.getArb().getEt() + "\n";
-            } else {
+            } else
+            {
                 s += t + r.getEt() + "\n";
             }
             s += desp(r.getAbj(), t + "\t");
@@ -161,33 +185,87 @@ public class MultiListaDL<T> implements Serializable {
      * "A","B","C": significa, entra a "A", entra a "B" y elimina "C"
      * @return el nodo eliminado, null si no se encontró
      */
-    public NodoML elimina(String... ruta) {
+    public NodoML elimina(String... ruta)
+    {
         NodoML datos[] = elimina(this.r, ruta, 0);
         this.r = datos[1];
         return datos[0];
 
     }
 
-    private NodoML[] elimina(NodoML r, String[] s, int nivel) {
+    /**
+     *
+     * @param nombre etiqueta que se desea eliminar
+     * @param raiz raiz de la lista de donde se desea eliminar
+     * @return arreglo [0] = eliminado, null si no fue encontrado , en la [1] =
+     * nueva raiz de la lista
+     *
+     */
+    public static NodoML[] eliminaEnLista(String nombre, NodoML raiz)
+    {
+        NodoML[] datos = new NodoML[2];
+        ListaDLML auxiliar = new ListaDLML(raiz);
+        datos[0] = auxiliar.elimina(nombre);
+        if (datos[0] != null)
+        {
+
+            datos[0].setArb(null);
+        }
+        datos[1] = auxiliar.getR();
+        return datos;
+    }
+
+    /**
+     *
+     * @param raiz
+     * @return en la [0] devuelve el eliminado y en [1] devuelve la nueva r
+     */
+    public static NodoML[] eliminaPrimero(NodoML raiz)
+    {
+        NodoML[] datos = new NodoML[2];
+
+        ListaDLML auxiliar = new ListaDLML(raiz);
+        if (auxiliar.getR() != null)
+        {
+            datos[0] = auxiliar.elimina(auxiliar.getR().getEt());
+            if (datos[0] != null)
+            {
+                datos[0].setArb(null);
+                System.out.println("Eliminado: " + datos[0].getEt());
+            }
+        }
+
+        datos[1] = auxiliar.getR();
+        return datos;
+    }
+
+    private NodoML[] elimina(NodoML r, String[] s, int nivel)
+    {
         NodoML[] resultado = new NodoML[2];
-        if (r == null) {
+        if (r == null)
+        {
             resultado[0] = null;
             resultado[1] = null;
 
-        } else {
-            if (nivel == s.length - 1) {
+        } else
+        {
+            if (nivel == s.length - 1)
+            {
                 ListaDLML l = new ListaDLML();
                 l.setR(r);
-                NodoML eliminado = l.elimina(new NodoML(null, s[nivel]));
+                NodoML eliminado = l.elimina(s[nivel]);
                 resultado[0] = eliminado;
-                if (eliminado != null) {
+                if (eliminado != null)
+                {
                     resultado[0].setArb(null);
                 }
                 resultado[1] = l.getR();
                 return resultado;
-            } else {
+            } else
+            {
                 NodoML aux = buscaEnLista(r, s[nivel]);
-                if (aux != null) {
+                if (aux != null)
+                {
                     NodoML[] resAbajo = elimina(aux.getAbj(), s, nivel + 1);
                     aux.setAbj(resAbajo[1]);
                     resultado[0] = resAbajo[0];
@@ -199,7 +277,8 @@ public class MultiListaDL<T> implements Serializable {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         MultiListaDL m = new MultiListaDL();
         NodoML n1 = new NodoML("A", "A");
         NodoML n2 = new NodoML("B", "B");

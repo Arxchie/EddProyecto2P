@@ -5,6 +5,7 @@
 package edd_hospital_.modelo.cruds;
 
 import edd_hospital_.modelo.Hospitales;
+import edd_hospital_.modelo.LogicaNegocioJose;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.Crudable;
@@ -15,24 +16,25 @@ import interfaces.Crudable;
  */
 public class CrudHospital implements Crudable
 {
+    
     @Override
     public void insertar(MultiListaDL multilista, NodoML nodoAInsertar, String... ruta)
     {
         multilista.inserta(nodoAInsertar, ruta);
     }
-
+    
     @Override
     public NodoML eliminar(MultiListaDL multilista, String... ruta)
     {
         return multilista.elimina(ruta);
     }
-
+    
     @Override
     public NodoML buscarConRutaDeEtiquetas(MultiListaDL multilista, String... ruta)
     {
         return multilista.buscarEnMultilista(ruta);
     }
-
+    
     @Override
     public void actualizarNodo(MultiListaDL multilista, Object nuevo, String... ruta)
     {
@@ -51,12 +53,21 @@ public class CrudHospital implements Crudable
             int nivel = h.getNivel();
             if (nivel == 3)
             {
-                System.out.println("subir a nivel 3");
+                if (!LogicaNegocioJose.tieneOncoYNeuro(nodoAActualizar))
+                {
+                    System.out.println("subir a nivel 3");
+                    LogicaNegocioJose.subirNodoANivel3(nodoAActualizar);
+                }
             } else
             {
-                System.out.println("subir bajar de nivel 3");
+                if (LogicaNegocioJose.tieneOncoYNeuro(nodoAActualizar))
+                {
+                    System.out.println("bajar de nivel 3");
+                    LogicaNegocioJose.bajarHospitalNivel3(nodoAActualizar);
+                    
+                }
             }
         }
     }
-
+    
 }

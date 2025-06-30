@@ -11,30 +11,23 @@ import interfaces.Crudable;
  *
  * @author HP
  */
-public class CrudFactory
-{
+public class CrudFactory {
 
-   public static Crudable crearCrud(Niveles nivel)
-    {
-        switch (nivel)
-        {
-            case DEPENDENCIA ->
-            {
+    public static Crudable crearCrud(Niveles nivel) {
+        switch (nivel) {
+            case DEPENDENCIA -> {
                 return new CrudGenerico();
             }
-            case HOSPITAL ->
-            {
+            case HOSPITAL -> {
                 return new CrudHospital();
             }
-            case ESPECIALIDAD ->
-            {
+            case ESPECIALIDAD -> {
 
                 return new CrudEspecialidad();
             }
 
-            case PACIENTE ->
-            {
-                return new CrudGenerico();
+            case PACIENTE -> {
+                return new CrudPaciente();
             }
 
             default ->
