@@ -2,6 +2,7 @@ package edd_hospital_.vista;
 
 import edd_hospital_.modelo.BicolaPacientes;
 import edd_hospital_.modelo.Niveles;
+import edd_hospital_.modelo.RemodelacionHospitales;
 import interfaces.MostrableEnTabla;
 import edd_hospital_.multi_lista.NodoML;
 import javax.swing.table.DefaultTableModel;
@@ -398,7 +399,21 @@ public class VtnGeneral2 extends javax.swing.JFrame
         return evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt);
     }
 
-    public String getNombreSeleccionado()
+    public String getNombreSeleccionado(Niveles nivel, String dependenciaPadre)
+    {
+        String seleccionado = getNombreSeleccionado2();
+        if (nivel == Niveles.HOSPITAL && seleccionado != null)
+        {
+            String nombreDeSuTemporal = RemodelacionHospitales.buscaSuTemporal(dependenciaPadre, seleccionado);
+            if (nombreDeSuTemporal != null)
+            {
+                return nombreDeSuTemporal;
+            }
+        }
+        return seleccionado;
+    }
+
+    public String getNombreSeleccionado2()
     {
         String claveSeleccionado = null;
         int filaSeleccionada = jtbTabla.getSelectedRow();
@@ -410,6 +425,9 @@ public class VtnGeneral2 extends javax.swing.JFrame
         }
         return claveSeleccionado;
     }
+
+   
+
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnVolverActionPerformed
     {//GEN-HEADEREND:event_btnVolverActionPerformed
 

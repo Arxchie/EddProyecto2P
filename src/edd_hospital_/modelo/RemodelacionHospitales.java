@@ -7,15 +7,17 @@ package edd_hospital_.modelo;
 import edd_hospital_.multi_lista.ListaDLML;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
+import java.io.Serializable;
 
 /**
  *
  * @author saulo
  */
-public class RemodelacionHospitales
+public class RemodelacionHospitales 
 {
 
-    static ListaDLML listaRemodelacion = new ListaDLML();
+    public static ListaDLML listaRemodelacion ;
+    
 
     /**
      * elimina las especialidades y pacientes del hospital seleccionado en base
@@ -33,6 +35,10 @@ public class RemodelacionHospitales
      */
     public static void remodelacion(String dependencia, String hospital, String hospitalTemporal, MultiListaDL multilista)
     {
+        if (listaRemodelacion == null)
+        {
+            listaRemodelacion = new ListaDLML();
+        }
         if (dependencia == null || hospital == null || hospitalTemporal == null || multilista == null)
         {
             throw new IllegalArgumentException("Los datos son nulos");
@@ -41,6 +47,7 @@ public class RemodelacionHospitales
         {
             throw new IllegalMonitorStateException("No puedes mandar remodelacion un hospital temporal");
         }
+
         if (estaEnRemodelacion(dependencia, hospital))
         {
             throw new IllegalMonitorStateException("El hospital ya esta en remodelación");
@@ -75,7 +82,7 @@ public class RemodelacionHospitales
 
             }
         }
-
+        System.out.println("Hospitales remodelacion: " + listaRemodelacion.desp());
         System.out.println(multilista.desp());
     }
 
@@ -117,7 +124,7 @@ public class RemodelacionHospitales
         hospitalTemporal = multilista.buscarEnMultilista(dependencia, valores[1]);
         if (hospitalTemporal == null)
         {
-             throw new IllegalStateException("No se encontro el hospital temporal");
+            throw new IllegalStateException("No se encontro el hospital temporal");
         }
         auxL = hospitalTemporal.getAbj();
         while (auxL != null)
@@ -126,31 +133,38 @@ public class RemodelacionHospitales
             multilista.inserta(auxL2, dependencia, hospital);
             auxL = multilista.buscarEnMultilista(dependencia, valores[1]).getAbj();
         }
-
+        System.out.println(listaRemodelacion.desp());
         multilista.elimina(dependencia, valores[1]);
 
     }
 
-    public static NodoML eliminaHospitalTemporalLista(String dependencia, String hospital)
+    public static NodoML eliminaHospitalTemporalLista(String dependenciaPadre, String hospitalOrigen)
     {
         NodoML aux = listaRemodelacion.getR();
         NodoML eliminado = null;
-        
+
         while (aux != null)
         {
             String[] obj = (String[]) aux.getObj();
             if (obj != null)
             {
-                if (obj[2].equals(dependencia) && obj[0].equals(hospital))
+                if (obj[2].equals(dependenciaPadre) && obj[0].equals(hospitalOrigen))
                 {
                     ListaDLML listaAux = new ListaDLML(aux);
-                    return listaAux.elimina(hospital);
+                    eliminado = listaAux.elimina(hospitalOrigen);
+                    if (listaRemodelacion.getR() == eliminado)
+                    {
+                        listaRemodelacion.setR(listaAux.getR());
+                    }
+
+                    return eliminado;
                 }
             }
             aux = aux.getSig();
         }
         return eliminado;
     }
+
     public static boolean estaEnRemodelacion(String dependencia, String hospital)
     {
         NodoML aux = listaRemodelacion.getR();
@@ -168,7 +182,24 @@ public class RemodelacionHospitales
         }
         return false;
     }
-   
+
+    public static String buscaSuTemporal(String dependencia, String hospitalOrigen)
+    {
+        NodoML aux = listaRemodelacion.getR();
+        while (aux != null)
+        {
+            String[] obj = (String[]) aux.getObj();
+            if (obj != null)
+            {
+                if (obj[2].equals(dependencia) && obj[0].equals(hospitalOrigen))
+                {
+                    return obj[1];
+                }
+            }
+            aux = aux.getSig();
+        }
+        return null;
+    }
 
     public static boolean esTemporal(String dependencia, String hospital)
     {

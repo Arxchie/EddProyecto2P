@@ -4,11 +4,13 @@
  */
 package edd_hospital_.multi_lista;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Joabp
  */
-public class ListaDLML<T>
+public class ListaDLML<T> implements Serializable
 {
 
     private NodoML<T> r;
@@ -96,12 +98,7 @@ public class ListaDLML<T>
                 aux = aux.getSig();
             }
         }
-        s += "\n";
-        while (aux != null)
-        {
-            s += aux.getEt() + "\t";
-            aux = aux.getAnt();
-        }
+        
         return s;
     }
 
