@@ -304,6 +304,9 @@ public class vtnPacientes extends javax.swing.JDialog implements VentanaRegistra
         // Mover el cursor al final
         textField.setCaretPosition(formatted.length());
     }
+    
+    
+    
      private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jtfNombreKeyTyped
      {//GEN-HEADEREND:event_jtfNombreKeyTyped
          Validaciones.validaAlfabeticos(evt, 35, jtfNombre.getText());
