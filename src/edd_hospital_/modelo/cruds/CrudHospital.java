@@ -26,6 +26,7 @@ public class CrudHospital implements Crudable
 
             throw new IllegalArgumentException("ya existe un hospital con ese nombre ");
         }
+        
         multilista.inserta(nodoAInsertar, ruta);
     }
 

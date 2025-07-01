@@ -4,10 +4,13 @@
  */
 package edd_hospital_.modelo.cruds;
 
+import cjb.ci.Mensaje;
 import edd_hospital_.modelo.Especialidad;
+import edd_hospital_.modelo.RemodelacionHospitales;
 import edd_hospital_.multi_lista.MultiListaDL;
 import edd_hospital_.multi_lista.NodoML;
 import interfaces.Crudable;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +24,10 @@ public class CrudPaciente implements Crudable
     {
         validar(nodoAInsertar, multilista, ruta);
         multilista.inserta(nodoAInsertar, ruta);
+        if (RemodelacionHospitales.esTemporal(ruta[0], ruta[1]))
+        {
+            JOptionPane.showMessageDialog(null, "El hospital esta en remodelación se a agregado al hospital temporal" + ruta[1]);
+        }
     }
 
     @Override

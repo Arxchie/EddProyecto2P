@@ -5,18 +5,22 @@
 package edd_hospital_.modelo.modelosDeTablas;
 
 import edd_hospital_.modelo.Hospitales;
+import edd_hospital_.modelo.RemodelacionHospitales;
+import edd_hospital_.multi_lista.NodoML;
+import interfaces.MostrableEnTabla;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author HP
  */
-public class ModeloTablaHospitales extends ModeloTablaGenerico<Hospitales>
+public class ModeloTablaHospitales implements MostrableEnTabla
 
 {
 
     public ModeloTablaHospitales()
     {
-        super(Hospitales.class);
     }
 
     @Override
@@ -28,7 +32,6 @@ public class ModeloTablaHospitales extends ModeloTablaGenerico<Hospitales>
         };
     }
 
-    @Override
     protected Object[] extraerFila(Hospitales obj)
     {
         return new Object[]
@@ -38,6 +41,33 @@ public class ModeloTablaHospitales extends ModeloTablaGenerico<Hospitales>
             obj.getNivel(),
             obj.getDireccion()
         };
+    }
+
+    @Override
+    public Object[][] getDatos(NodoML raiz)
+    {
+        if (raiz == null)
+        {
+            return null;
+        }
+
+        List<Object[]> filas = new ArrayList<>();
+        NodoML aux = raiz;
+        NodoML nodoPadre ;
+        while (aux != null)
+        {
+            nodoPadre = aux.getArb();
+            if (aux.getObj() instanceof Hospitales h && nodoPadre != null)
+            {
+                if (!RemodelacionHospitales.esTemporal(nodoPadre.getEt(), aux.getEt()))
+                {
+                    filas.add(extraerFila(h));
+                }
+                
+            }
+            aux = aux.getSig();
+        }
+        return filas.toArray(new Object[0][]);
     }
 
 }
