@@ -119,6 +119,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
         btnModificar = new javax.swing.JButton();
         cargar = new javax.swing.JButton();
         btnAltaPaciente = new javax.swing.JButton();
+        btnRemodelacion = new javax.swing.JButton();
+        btnRemodelacionTerminada = new javax.swing.JButton();
         jpnSuperior = new javax.swing.JPanel();
         panelNavegacion = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
@@ -144,7 +146,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
         );
         jpnLateralLayout.setVerticalGroup(
             jpnLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGap(0, 599, Short.MAX_VALUE)
         );
 
         jPanel1.add(jpnLateral, java.awt.BorderLayout.LINE_START);
@@ -190,34 +192,59 @@ public class VtnGeneral2 extends javax.swing.JFrame
             }
         });
 
+        btnRemodelacion.setText("Remodelacion de Hospital");
+        btnRemodelacion.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnRemodelacionActionPerformed(evt);
+            }
+        });
+
+        btnRemodelacionTerminada.setText("Remodelacion Terminada");
+
         javax.swing.GroupLayout jpnBotonesLayout = new javax.swing.GroupLayout(jpnBotones);
         jpnBotones.setLayout(jpnBotonesLayout);
         jpnBotonesLayout.setHorizontalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnBotonesLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(cargar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnBotonesLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(cargar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpnBotonesLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(btnRemodelacion)))
                 .addGap(37, 37, 37)
-                .addComponent(btnAltaPaciente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addComponent(btnNuevo)
-                .addGap(34, 34, 34)
-                .addComponent(btnModificar)
-                .addGap(56, 56, 56)
-                .addComponent(btnEliminar)
-                .addGap(20, 20, 20))
+                .addGroup(jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnBotonesLayout.createSequentialGroup()
+                        .addComponent(btnRemodelacionTerminada)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jpnBotonesLayout.createSequentialGroup()
+                        .addComponent(btnAltaPaciente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                        .addComponent(btnNuevo)
+                        .addGap(34, 34, 34)
+                        .addComponent(btnModificar)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnEliminar)
+                        .addGap(19, 19, 19))))
         );
         jpnBotonesLayout.setVerticalGroup(
             jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnBotonesLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+            .addGroup(jpnBotonesLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
                     .addComponent(btnEliminar)
                     .addComponent(btnModificar)
                     .addComponent(cargar)
                     .addComponent(btnAltaPaciente))
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(jpnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemodelacion)
+                    .addComponent(btnRemodelacionTerminada))
+                .addGap(23, 23, 23))
         );
 
         jPanel4.add(jpnBotones, java.awt.BorderLayout.PAGE_END);
@@ -251,7 +278,7 @@ public class VtnGeneral2 extends javax.swing.JFrame
                         .addComponent(btnVolver)
                         .addGap(233, 233, 233)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jpnSuperiorLayout.setVerticalGroup(
             jpnSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,6 +446,11 @@ public class VtnGeneral2 extends javax.swing.JFrame
 
     }//GEN-LAST:event_btnAltaPacienteActionPerformed
 
+    private void btnRemodelacionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemodelacionActionPerformed
+    {//GEN-HEADEREND:event_btnRemodelacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemodelacionActionPerformed
+
     public JButton getBtnAltaPaciente()
     {
         return btnAltaPaciente;
@@ -437,6 +469,39 @@ public class VtnGeneral2 extends javax.swing.JFrame
         } else
         {
             btnAltaPaciente.setVisible(false);
+        }
+    }
+
+    public JButton getBtnRemodelacion()
+    {
+        return btnRemodelacion;
+    }
+
+    public void setBtnRemodelacion(JButton btnRemodelacion)
+    {
+        this.btnRemodelacion = btnRemodelacion;
+    }
+
+    public JButton getBtnRemodelacionTerminada()
+    {
+        return btnRemodelacionTerminada;
+    }
+
+    public void setBtnRemodelacionTerminada(JButton btnRemodelacionTerminada)
+    {
+        this.btnRemodelacionTerminada = btnRemodelacionTerminada;
+    }
+
+    public void mostrarBotonesRemodelacion(Niveles nivelActual)
+    {
+        if (nivelActual == Niveles.HOSPITAL)
+        {
+            btnRemodelacion.setVisible(true);
+            btnRemodelacionTerminada.setVisible(true);
+        } else
+        {
+            btnRemodelacion.setVisible(false);
+            btnRemodelacionTerminada.setVisible(false);
         }
     }
 
@@ -485,6 +550,8 @@ public class VtnGeneral2 extends javax.swing.JFrame
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnRemodelacion;
+    private javax.swing.JButton btnRemodelacionTerminada;
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton cargar;
     private javax.swing.JPanel jPanel1;

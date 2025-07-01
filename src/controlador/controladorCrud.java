@@ -1,5 +1,7 @@
 package controlador;
 
+import cjb.ci.CtrlInterfaz;
+import cjb.ci.Mensaje;
 import edd_hospital_.modelo.Navegador;
 import edd_hospital_.modelo.NavegadorException;
 import edd_hospital_.modelo.Niveles;
@@ -18,7 +20,9 @@ import interfaces.Crudable;
 import interfaces.VentanaEditable;
 import java.awt.event.ActionEvent;
 import edd_hospital_.modelo.Datos;
+import edd_hospital_.modelo.GeneradorEtiquetasHospitalesTemporales;
 import edd_hospital_.modelo.LogicaNegocioJose;
+import edd_hospital_.modelo.RemodelacionHospitales;
 import poo.ManipulacionArchivos;
 
 /**
@@ -30,6 +34,7 @@ public class controladorCrud
 
     private static final int NUMERO_NIVELES_ENTRABLES_NAVEGADOR = 3;
     private static final String archivos = "datos.dat";
+    private static final String archivoEtiquetas = "etiquetas.dat";
     private static final String archivoRegistros = "archivoRegistros.dat";
     VtnGeneral2 ventanaGeneral;
     Navegador navegador;
@@ -45,6 +50,7 @@ public class controladorCrud
     {
 
         multilista = (MultiListaDL) ManipulacionArchivos.carga(ventanaGeneral, archivos);
+        Integer numeroEtiquetas = (Integer) ManipulacionArchivos.carga(ventanaGeneral, archivoEtiquetas);
 
         Integer nRegistros = (Integer) ManipulacionArchivos.carga(ventanaGeneral, archivoRegistros);
         if (nRegistros == null)
@@ -54,6 +60,15 @@ public class controladorCrud
         {
 
             Datos.setNumeroDeRegistros(nRegistros);
+        }
+
+        if (numeroEtiquetas == null)
+        {
+            GeneradorEtiquetasHospitalesTemporales.etiqueta = 0;
+        } else
+        {
+
+            GeneradorEtiquetasHospitalesTemporales.etiqueta = numeroEtiquetas;
         }
         if (multilista == null)
         {
@@ -95,6 +110,7 @@ public class controladorCrud
         ventanaGeneral.actualizarPanelNavegacion(navegador.getRuta());
         actualizarTituloNivel();
         ventanaGeneral.mostrarBotonAltaPaciente(navegador.getTipoNivelActual());
+        ventanaGeneral.mostrarBotonesRemodelacion(navegador.getTipoNivelActual());
     }
 
     private void actualizarTituloNivel()
@@ -287,7 +303,60 @@ public class controladorCrud
                 JOptionPane.showMessageDialog(ventanaGeneral, " No hay un elemento seleccionado para eliminar. ");
             }
         });
+        inicializarBotonesRemodelacion();
 
+    }
+
+    private void inicializarBotonesRemodelacion()
+    {
+        ventanaGeneral.getBtnRemodelacion().addActionListener((e) ->
+        {
+            String nombreSeleccionado = ventanaGeneral.getNombreSeleccionado();
+            if (nombreSeleccionado != null)
+            {
+
+                try
+                {
+                    String etiqueta = GeneradorEtiquetasHospitalesTemporales.obtenerSiguienteEtiqueta();
+                    RemodelacionHospitales.remodelacion(navegador.getRutaArray()[0], nombreSeleccionado, etiqueta, multilista);
+                    Mensaje.exito(ventanaGeneral,
+                            "Ya se mando a remodelación el hospital " + nombreSeleccionado);
+                    ManipulacionArchivos.guarda(ventanaGeneral, multilista, archivos);
+                    ManipulacionArchivos.guarda(ventanaGeneral, GeneradorEtiquetasHospitalesTemporales.etiqueta, archivoEtiquetas);
+                    actualizarVista();
+                } catch (RuntimeException ex)
+                {
+                    JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                    ex.printStackTrace();
+                }
+            } else
+            {
+                JOptionPane.showMessageDialog(ventanaGeneral, " No hay un elemento seleccionado para eliminar. ");
+            }
+        });
+        ventanaGeneral.getBtnRemodelacionTerminada().addActionListener((e) ->
+        {
+            String nombreSeleccionado = ventanaGeneral.getNombreSeleccionado();
+            if (nombreSeleccionado != null)
+            {
+
+                try
+                {
+                    RemodelacionHospitales.remodelacionTErminada(navegador.getRutaArray()[0], nombreSeleccionado, multilista);
+                    Mensaje.exito(ventanaGeneral,
+                            "Hospital remodelado " + nombreSeleccionado);
+                    ManipulacionArchivos.guarda(ventanaGeneral, multilista, archivos);
+                    actualizarVista();
+                } catch (RuntimeException ex)
+                {
+                    JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                    ex.printStackTrace();
+                }
+            } else
+            {
+                JOptionPane.showMessageDialog(ventanaGeneral, " No hay un elemento seleccionado para eliminar. ");
+            }
+        });
     }
 
     public void entrarANivel(String nombre) throws NavegadorException
