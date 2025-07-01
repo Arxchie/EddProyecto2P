@@ -4,7 +4,9 @@
  */
 package main;
 
+import controlador.controladorCrud;
 import edd_hospital_.modelo.Dependencia;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,8 +14,20 @@ import edd_hospital_.modelo.Dependencia;
  */
 public class Main
 {
+
     public static void main(String[] args)
     {
+
+        try
+        {
+            controladorCrud controlador = new controladorCrud();
+            controlador.iniciar();
+            System.out.println("inicio");
+        } catch (Exception e )
+        {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error inesperado");
+            System.out.println(e.getMessage());
+        }
 
     }
 }

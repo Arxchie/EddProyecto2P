@@ -370,6 +370,7 @@ public class controladorCrud
                 } catch (RuntimeException ex)
                 {
                     JOptionPane.showMessageDialog(ventanaGeneral, ex.getMessage());
+                   ex.printStackTrace();
                 }
             } else
             {
@@ -413,10 +414,5 @@ public class controladorCrud
         ventanaGeneral.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
-        controladorCrud controlador = new controladorCrud();
-        controlador.iniciar();
-
-    }
+    
 }

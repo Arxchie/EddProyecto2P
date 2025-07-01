@@ -13,11 +13,10 @@ import java.io.Serializable;
  *
  * @author saulo
  */
-public class RemodelacionHospitales 
+public class RemodelacionHospitales
 {
 
-    public static ListaDLML listaRemodelacion ;
-    
+    public static ListaDLML listaRemodelacion;
 
     /**
      * elimina las especialidades y pacientes del hospital seleccionado en base
@@ -120,6 +119,7 @@ public class RemodelacionHospitales
             throw new IllegalStateException("Hospital temporal no encontrado");
         }
         String[] valores = (String[]) datoEliminado.getObj();
+        System.out.println(hospital);
         System.out.println("dependencia: " + dependencia + " [1] = " + valores[1]);
         hospitalTemporal = multilista.buscarEnMultilista(dependencia, valores[1]);
         if (hospitalTemporal == null)
@@ -133,7 +133,7 @@ public class RemodelacionHospitales
             multilista.inserta(auxL2, dependencia, hospital);
             auxL = multilista.buscarEnMultilista(dependencia, valores[1]).getAbj();
         }
-        System.out.println(listaRemodelacion.desp());
+        System.out.println("Hospitales Remoelados: " + listaRemodelacion.desp());
         multilista.elimina(dependencia, valores[1]);
 
     }
@@ -150,13 +150,11 @@ public class RemodelacionHospitales
             {
                 if (obj[2].equals(dependenciaPadre) && obj[0].equals(hospitalOrigen))
                 {
-                    ListaDLML listaAux = new ListaDLML(aux);
-                    eliminado = listaAux.elimina(hospitalOrigen);
-                    if (listaRemodelacion.getR() == eliminado)
-                    {
-                        listaRemodelacion.setR(listaAux.getR());
-                    }
-
+                    aux.setEt("eliminar1234");
+                    ListaDLML listaAux = new ListaDLML(listaRemodelacion.getR());
+                    eliminado = listaAux.elimina("eliminar1234");
+                    listaRemodelacion.setR(listaAux.getR());
+                    System.out.println("Hospitales remodelados: :" + listaRemodelacion.desp());
                     return eliminado;
                 }
             }

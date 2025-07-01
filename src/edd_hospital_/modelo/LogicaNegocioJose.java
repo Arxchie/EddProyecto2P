@@ -383,19 +383,20 @@ public class LogicaNegocioJose
                 System.out.println("no hay paciente de onco en espera");
             }
 
-        }
-
-        if (EspecialidadesNivel3.neurologia.contains(especialidadPadre.getEt().toLowerCase().trim()))
+        } else
         {
-            NodoML pacienteEnEspera = BicolaPacientes.eliminaNodoPacienteNeuro();
+            if (EspecialidadesNivel3.neurologia.contains(especialidadPadre.getEt().toLowerCase().trim()))
+            {
+                NodoML pacienteEnEspera = BicolaPacientes.eliminaNodoPacienteNeuro();
 
-            if (pacienteEnEspera != null)
-            {
-                multilista.inserta(pacienteEnEspera, rutaActual);
-                JOptionPane.showMessageDialog(null, "Se asigno el paciente: " + pacienteEnEspera.getEt() + " a una cama de neurologia");
-            } else
-            {
-                System.out.println("no hay paciente de neurologia en espera");
+                if (pacienteEnEspera != null)
+                {
+                    multilista.inserta(pacienteEnEspera, rutaActual);
+                    JOptionPane.showMessageDialog(null, "Se asigno el paciente: " + pacienteEnEspera.getEt() + " a una cama de neurologia");
+                } else
+                {
+                    System.out.println("no hay paciente de neurologia en espera");
+                }
             }
         }
 
